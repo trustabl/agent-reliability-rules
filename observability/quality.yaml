@@ -49,6 +49,14 @@ rules:
     title: The only span exporter writes to the console
     severity: low
     confidence: 0.6
+    # Python-only: the exporter-construction walk that backs
+    # repo_observability_console_only (pyObservabilitySignals) has no TS/JS
+    # counterpart yet (tsObservabilitySignals only collects import/init). A
+    # pure TS/JS repo has zero exporter signals, so the predicate can never
+    # observe a console-only exporter there — language: python keeps the rule
+    # from advertising coverage on repos it cannot actually inspect. See the
+    # rulebook rationale doc's known-gaps section.
+    language: python
     applies_to:
       - claude_sdk
       - openai_agents
@@ -78,6 +86,13 @@ rules:
     title: Tracing captures full prompt and response content
     severity: medium
     confidence: 0.8
+    # Python-only: the content-capture walk that backs
+    # repo_observability_captures_content (pyObservabilitySignals) has no
+    # TS/JS counterpart yet — Vercel's experimental_telemetry.recordInputs and
+    # equivalents are not detected on the TS side. language: python keeps the
+    # rule from advertising coverage on repos it cannot actually inspect. See
+    # the rulebook rationale doc's known-gaps section.
+    language: python
     applies_to:
       - claude_sdk
       - openai_agents
