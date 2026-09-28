@@ -36,9 +36,9 @@
       "attested_commit": "b72f0df9f65c26cd722442a7c9ffcd1439cee04e"
     },
     "claude_sdk/agent_safety.yaml": {
-      "sha256": "40b6a4633bd71f32277c9dd8f306ab191afcb443fe502acd500857e2ca20289c",
-      "attested_at": "2026-09-21",
-      "attested_commit": "b72f0df9f65c26cd722442a7c9ffcd1439cee04e"
+      "sha256": "d7604e545a3823b5c5b493a2c8296cf44368430c56834662435e88cc61ec1d14",
+      "attested_at": "2026-09-28",
+      "attested_commit": "dddd0ac551a3536519826276abc622c474debaba"
     },
     "claude_sdk/code_execution.yaml": {
       "sha256": "d4b5357b6f58c23c2b5a8c83ebdb3b6fa3fd9cda18a5ce097e73deae75fd249c",
@@ -66,9 +66,9 @@
       "attested_commit": "cfdfd46913007bba389c3096c7c022417c5dac66"
     },
     "claude_sdk/repo.yaml": {
-      "sha256": "2992a3067f1ad3510131f0ba367e65e3edfb794cf02c4cfcfa645074b59b31b3",
-      "attested_at": "2026-09-21",
-      "attested_commit": "b72f0df9f65c26cd722442a7c9ffcd1439cee04e"
+      "sha256": "70ab631398e0ada0787803d202a04aaf8acfde582c70f2bf114aa0b5d40defb3",
+      "attested_at": "2026-09-28",
+      "attested_commit": "dddd0ac551a3536519826276abc622c474debaba"
     },
     "claude_sdk/repo_hygiene.yaml": {
       "sha256": "64f7548cf554cf1d6af17178040ec6b13b11388b5cb69e558742fec68e2e3be6",
@@ -171,14 +171,14 @@
       "attested_commit": "cfdfd46913007bba389c3096c7c022417c5dac66"
     },
     "google_adk/network.yaml": {
-      "sha256": "3b10e8eac8142b9a0cce68935aab3f747d1498e85f59b296c46641e165a2931a",
-      "attested_at": "2026-09-21",
-      "attested_commit": "b72f0df9f65c26cd722442a7c9ffcd1439cee04e"
+      "sha256": "cb9f9c52b77b8d95048f468fb76104efea7660ca108a57ad10511b911c599b18",
+      "attested_at": "2026-09-28",
+      "attested_commit": "dddd0ac551a3536519826276abc622c474debaba"
     },
     "google_adk/path_safety.yaml": {
-      "sha256": "adf09b87a4af287eb7ee25e97140f2160dd6a65b586030fb82d90fbd27c75abd",
-      "attested_at": "2026-09-21",
-      "attested_commit": "b72f0df9f65c26cd722442a7c9ffcd1439cee04e"
+      "sha256": "e2de1fee1cca7f310c3bd849365b239160915991624a06105e20d38ac598fa6d",
+      "attested_at": "2026-09-28",
+      "attested_commit": "dddd0ac551a3536519826276abc622c474debaba"
     },
     "google_adk/repo_hygiene.yaml": {
       "sha256": "7c675c1500caf7724d94adca6de504f25fc020aa5a7fc20092b882155ff19fc0",
@@ -196,9 +196,9 @@
       "attested_commit": "cfdfd46913007bba389c3096c7c022417c5dac66"
     },
     "google_adk/tool_definition.yaml": {
-      "sha256": "efc60654995a7cd947e2d02ed490a722a355058c1e30c3e0ec9a1b827395feea",
-      "attested_at": "2026-09-21",
-      "attested_commit": "b72f0df9f65c26cd722442a7c9ffcd1439cee04e"
+      "sha256": "a920eb6f6dac6595a484c21224fc8145f715b86ea0cc60da74a6dbf79fa1ffb2",
+      "attested_at": "2026-09-28",
+      "attested_commit": "dddd0ac551a3536519826276abc622c474debaba"
     },
     "langchain/agent_safety.yaml": {
       "sha256": "b3f22967f1372b0ba22a39ae1877004b69b7c75c49946af1f729266c96529d7b",
@@ -421,9 +421,9 @@
       "attested_commit": "b72f0df9f65c26cd722442a7c9ffcd1439cee04e"
     },
     "claude_skill/skill_quality_text.yaml": {
-      "sha256": "4a3ef1f4266c4f5977d5f7bb86b948e594fd3324ef95a5fbfca315f89e74f5a5",
-      "attested_at": "2026-09-21",
-      "attested_commit": "b72f0df9f65c26cd722442a7c9ffcd1439cee04e"
+      "sha256": "5ad88d6de6ab052525ad956c97449d8d3ff354e92e79910c34e7b1817432c4c0",
+      "attested_at": "2026-09-28",
+      "attested_commit": "dddd0ac551a3536519826276abc622c474debaba"
     },
     "autogen/error_handling.yaml": {
       "sha256": "18b7d3a8a678bd7e53d120a99fa5b652f8805ce5bc7c036baaac4f0a18bf929d",
