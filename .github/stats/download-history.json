@@ -59,13 +59,13 @@
     },
     {
       "date": "2026-09-28",
-      "bundles": 1451,
-      "statements": 132,
+      "bundles": 1456,
+      "statements": 150,
       "other": 0,
-      "total": 1583,
+      "total": 1606,
       "since_baseline": {
-        "bundles": 910,
-        "total": 1023
+        "bundles": 915,
+        "total": 1046
       }
     }
   ],
