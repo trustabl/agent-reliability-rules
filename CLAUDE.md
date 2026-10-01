@@ -79,6 +79,7 @@ against. Pick values from the table for the scope you're targeting.
 | `crewai_tool`        | `@tool` / `BaseTool` subclass (CrewAI)        |
 | `pydantic_ai_tool`   | `@agent.tool` / `@agent.tool_plain` / `Tool(...)` (Pydantic AI) |
 | `adk_function_tool`  | `FunctionTool(fn)` wrapping a Python function (Google ADK) |
+| `langgraph_node`     | Plain function registered via `<builder>.add_node(...)` in a LangGraph graph (not a `@tool`) |
 | `vercel_ai_tool`     | `tool({...})` / `dynamicTool({...})` from the `ai` package |
 | `autogen_tool`       | `register_function` / `register_for_llm` / `register_for_execution` (AutoGen, AG2) |
 | `unknown`            | Fallback kind; rarely useful                  |
@@ -126,6 +127,7 @@ enum values used by the `repo_has_sdk_in_code` predicate:
 | `pydantic_ai`      | Pydantic AI                          |
 | `vercel_ai`        | Vercel AI SDK                        |
 | `autogen`          | AutoGen / AG2                        |
+| `raw_llm_sdk`      | Bare `anthropic` / `openai` client usage (no agent framework); category `raw_llm_sdk` loads unconditionally, the rule's own predicate gates |
 
 Repo-scope rules typically combine `applies_to` with a `repo_has_sdk_in_code`
 predicate to narrow firing to repos that actually use the SDK in code (e.g.
