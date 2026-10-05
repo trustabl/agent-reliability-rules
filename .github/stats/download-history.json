@@ -70,13 +70,13 @@
     },
     {
       "date": "2026-10-05",
-      "bundles": 1557,
-      "statements": 104,
+      "bundles": 1565,
+      "statements": 114,
       "other": 0,
-      "total": 1661,
+      "total": 1679,
       "since_baseline": {
-        "bundles": 1016,
-        "total": 1101
+        "bundles": 1024,
+        "total": 1119
       }
     }
   ],
