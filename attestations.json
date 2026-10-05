@@ -1,9 +1,9 @@
 {
   "rules": {
     "autogen/agent_safety.yaml": {
-      "sha256": "674e6314d973dc37496ecef131202fe2404a19e597c4028e4487f6373d7255a2",
-      "attested_at": "2026-08-04",
-      "attested_commit": "cfdfd46913007bba389c3096c7c022417c5dac66"
+      "sha256": "cc00865918c75808be96ddd81617977f3e011888eadb2ff37f570036b6f69984",
+      "attested_at": "2026-10-05",
+      "attested_commit": "522f9c28c0d42d0d351d9aa59f40495b3485e93f"
     },
     "autogen/code_execution.yaml": {
       "sha256": "0676611e9185d3746ddb86aef51f6c844648edbf4d4d3a61a6725fa57d7ef0ff",
@@ -26,9 +26,9 @@
       "attested_commit": "cfdfd46913007bba389c3096c7c022417c5dac66"
     },
     "autogen/ssrf.yaml": {
-      "sha256": "d89c97ff5dcaf3a6d9b808f663ab35d06b4cc98c6beda96fb687562582f40ef5",
-      "attested_at": "2026-08-04",
-      "attested_commit": "cfdfd46913007bba389c3096c7c022417c5dac66"
+      "sha256": "527bd0cdb3c2846946ed5209fabf22a831e0bcb6e334528fdf256a3110f79501",
+      "attested_at": "2026-10-05",
+      "attested_commit": "522f9c28c0d42d0d351d9aa59f40495b3485e93f"
     },
     "autogen/tool_definition.yaml": {
       "sha256": "92a06ff77588b234f0f7a2ce98d66f1c13c083b8928d50f74b97fc59f653092e",
@@ -36,9 +36,9 @@
       "attested_commit": "b72f0df9f65c26cd722442a7c9ffcd1439cee04e"
     },
     "claude_sdk/agent_safety.yaml": {
-      "sha256": "d7604e545a3823b5c5b493a2c8296cf44368430c56834662435e88cc61ec1d14",
-      "attested_at": "2026-09-28",
-      "attested_commit": "dddd0ac551a3536519826276abc622c474debaba"
+      "sha256": "1c6398d8cb144033515cbf5165efbcc86ea3c65d3b41966bcf501a9e969e0073",
+      "attested_at": "2026-10-05",
+      "attested_commit": "522f9c28c0d42d0d351d9aa59f40495b3485e93f"
     },
     "claude_sdk/code_execution.yaml": {
       "sha256": "d4b5357b6f58c23c2b5a8c83ebdb3b6fa3fd9cda18a5ce097e73deae75fd249c",
@@ -81,9 +81,9 @@
       "attested_commit": "cfdfd46913007bba389c3096c7c022417c5dac66"
     },
     "claude_sdk/ssrf.yaml": {
-      "sha256": "8126fa182abe5039c72fa2f504c83aea4e72b4a2e8e67f3b3c8066a166bcb49b",
-      "attested_at": "2026-08-04",
-      "attested_commit": "cfdfd46913007bba389c3096c7c022417c5dac66"
+      "sha256": "074ca30eb0c64c2b7a6b80f2b722c038be9cb6e4edb42b24cbd2f1f358f5e393",
+      "attested_at": "2026-10-05",
+      "attested_commit": "522f9c28c0d42d0d351d9aa59f40495b3485e93f"
     },
     "claude_sdk/subagent_safety.yaml": {
       "sha256": "5da4b1a5babe4bc92e279ee81bf5fb6fe5f12ceb13f1ace05b2ff04ec83b6ecc",
@@ -101,9 +101,9 @@
       "attested_commit": "b72f0df9f65c26cd722442a7c9ffcd1439cee04e"
     },
     "crewai/agent_safety.yaml": {
-      "sha256": "a21212ab916c11a42925691f97c99dde806efa502c795e73db8fa4d1acaea377",
-      "attested_at": "2026-08-17",
-      "attested_commit": "5cf9c288e82b05217020bd023e38b6aa41d3ba95"
+      "sha256": "813e7273beb7ca520ac927d25fa36d587cbf351e541c14e8c98026d5debe7395",
+      "attested_at": "2026-10-05",
+      "attested_commit": "522f9c28c0d42d0d351d9aa59f40495b3485e93f"
     },
     "crewai/code_execution.yaml": {
       "sha256": "df73b5a5002c0f85dae4bed44570cd82471e936b3e16cad2405459cb6f744138",
@@ -131,9 +131,9 @@
       "attested_commit": "cfdfd46913007bba389c3096c7c022417c5dac66"
     },
     "crewai/ssrf.yaml": {
-      "sha256": "4b0ebf5512c828d4b22da057142476041867ffc06a2ca1994535019f2e5331dc",
-      "attested_at": "2026-08-04",
-      "attested_commit": "cfdfd46913007bba389c3096c7c022417c5dac66"
+      "sha256": "558357ac4818e2dde754584ad34f4a9d57970aab4691205d5df25132d346f07f",
+      "attested_at": "2026-10-05",
+      "attested_commit": "522f9c28c0d42d0d351d9aa59f40495b3485e93f"
     },
     "crewai/tool_behavior.yaml": {
       "sha256": "928e9dccf2bd087641dae7d27a321709095be9c79e8eb5616b6a7a3c1d63dbdf",
@@ -146,9 +146,9 @@
       "attested_commit": "b72f0df9f65c26cd722442a7c9ffcd1439cee04e"
     },
     "google_adk/agent_safety.yaml": {
-      "sha256": "4ae6b1d8af8a653f6abf2ab630b9cdabc79fad38e46f9854c0c1e9387039d71b",
-      "attested_at": "2026-09-21",
-      "attested_commit": "b72f0df9f65c26cd722442a7c9ffcd1439cee04e"
+      "sha256": "a7d88524cfdbd921b3bd1510ac3229da8f3c923ef48678dad4284cac6f338382",
+      "attested_at": "2026-10-05",
+      "attested_commit": "522f9c28c0d42d0d351d9aa59f40495b3485e93f"
     },
     "google_adk/builtin_tools.yaml": {
       "sha256": "87dab0ea78bdbd148856dcdb1e196efdc7bee2049d54c05bbd29749776504c1a",
@@ -191,9 +191,9 @@
       "attested_commit": "cfdfd46913007bba389c3096c7c022417c5dac66"
     },
     "google_adk/ssrf.yaml": {
-      "sha256": "d160b46326157adaae7bf01880872f6b7bf661fdd46abcf0eb45c7493ed1e187",
-      "attested_at": "2026-08-04",
-      "attested_commit": "cfdfd46913007bba389c3096c7c022417c5dac66"
+      "sha256": "93d576a31285e2ca9ccdb03e1b933144bca5039562104300d4150e47e000a9d8",
+      "attested_at": "2026-10-05",
+      "attested_commit": "522f9c28c0d42d0d351d9aa59f40495b3485e93f"
     },
     "google_adk/tool_definition.yaml": {
       "sha256": "a920eb6f6dac6595a484c21224fc8145f715b86ea0cc60da74a6dbf79fa1ffb2",
@@ -201,9 +201,9 @@
       "attested_commit": "dddd0ac551a3536519826276abc622c474debaba"
     },
     "langchain/agent_safety.yaml": {
-      "sha256": "b3f22967f1372b0ba22a39ae1877004b69b7c75c49946af1f729266c96529d7b",
-      "attested_at": "2026-09-21",
-      "attested_commit": "b72f0df9f65c26cd722442a7c9ffcd1439cee04e"
+      "sha256": "bf294229d14f8fd19e70f8f59482d2aa909dcaa76f24a2a3d95c10c4be875dab",
+      "attested_at": "2026-10-05",
+      "attested_commit": "522f9c28c0d42d0d351d9aa59f40495b3485e93f"
     },
     "langchain/code_execution.yaml": {
       "sha256": "d0f1f7b0e686957a976090c038ad3316a7d1df2d161d620b3e719c72a1879121",
@@ -221,9 +221,9 @@
       "attested_commit": "cfdfd46913007bba389c3096c7c022417c5dac66"
     },
     "langchain/ssrf.yaml": {
-      "sha256": "b2d3c808d351a453e49abe24a1c93b5753bae6ef6463d8fe1354c49c54c6f0cb",
-      "attested_at": "2026-08-04",
-      "attested_commit": "cfdfd46913007bba389c3096c7c022417c5dac66"
+      "sha256": "47c6a40fa8c5fa8991b5a0fef0a176411eeb65e88dc30e88efa6c48c7df1da6d",
+      "attested_at": "2026-10-05",
+      "attested_commit": "522f9c28c0d42d0d351d9aa59f40495b3485e93f"
     },
     "langchain/tool_behavior.yaml": {
       "sha256": "51e3712729f479321cb60c7324222342a99b838a6e60986eb127966adbc04642",
@@ -266,9 +266,9 @@
       "attested_commit": "cfdfd46913007bba389c3096c7c022417c5dac66"
     },
     "mcp/ssrf.yaml": {
-      "sha256": "4c3a157954ee563296d16b20946f637765708ee9983559b0ec7a1008d80729da",
-      "attested_at": "2026-08-04",
-      "attested_commit": "cfdfd46913007bba389c3096c7c022417c5dac66"
+      "sha256": "b6a86d2f083ccee1996e89c6955669cf90e0f900069605123cc5fbd3dc1afe0c",
+      "attested_at": "2026-10-05",
+      "attested_commit": "522f9c28c0d42d0d351d9aa59f40495b3485e93f"
     },
     "mcp/tool_definition.yaml": {
       "sha256": "e640f533ba26141e139044efc057509d13aa94ae5b608a6474642a50625ed8d3",
@@ -276,9 +276,9 @@
       "attested_commit": "b72f0df9f65c26cd722442a7c9ffcd1439cee04e"
     },
     "openai_sdk/agent_safety.yaml": {
-      "sha256": "5a726b12748341b36995e360bf2274a9a0a92b1d4dfdddc9bf976f077864f8d9",
-      "attested_at": "2026-09-21",
-      "attested_commit": "b72f0df9f65c26cd722442a7c9ffcd1439cee04e"
+      "sha256": "592e391eae30e78e711830b2f9b0351c506501834851e43c034ce20ecec6af54",
+      "attested_at": "2026-10-05",
+      "attested_commit": "522f9c28c0d42d0d351d9aa59f40495b3485e93f"
     },
     "openai_sdk/approvals.yaml": {
       "sha256": "b8bdf9f446985f6d0257f0b7d509bc9cd8d650d0abe0aaa9a57c77c9071a6b8b",
@@ -311,9 +311,9 @@
       "attested_commit": "b72f0df9f65c26cd722442a7c9ffcd1439cee04e"
     },
     "openai_sdk/network.yaml": {
-      "sha256": "5a3bc64c84d013487ad591d2989847ac8eec579fa69c108c36adf731cf514b79",
-      "attested_at": "2026-08-04",
-      "attested_commit": "cfdfd46913007bba389c3096c7c022417c5dac66"
+      "sha256": "5b510d55f01fc2a8a6d53a7c5d3170d842d20957f48bc8babf7c4ee24674b4e5",
+      "attested_at": "2026-10-05",
+      "attested_commit": "522f9c28c0d42d0d351d9aa59f40495b3485e93f"
     },
     "openai_sdk/observability.yaml": {
       "sha256": "c9b783155088c9bed836167b355f2d7f1761e7b1bef8e63b4085f3e6ee21b026",
@@ -341,14 +341,14 @@
       "attested_commit": "b72f0df9f65c26cd722442a7c9ffcd1439cee04e"
     },
     "openai_sdk/tracing.yaml": {
-      "sha256": "f5eb7a982c64e4dbfae1eccb9a01ea8930cef16954fe7bfc93aec23754846115",
-      "attested_at": "2026-08-04",
-      "attested_commit": "cfdfd46913007bba389c3096c7c022417c5dac66"
+      "sha256": "0f8a7becab2c21f09e8374acb0612136b60dd8c1296557d4191d577d1d9546ff",
+      "attested_at": "2026-10-05",
+      "attested_commit": "522f9c28c0d42d0d351d9aa59f40495b3485e93f"
     },
     "pydantic_ai/agent_safety.yaml": {
-      "sha256": "904a14fd7f51f64ac7a373e757a9d68af7b99a1c7a5bc64ca0bfe6a7dbfc838b",
-      "attested_at": "2026-09-21",
-      "attested_commit": "b72f0df9f65c26cd722442a7c9ffcd1439cee04e"
+      "sha256": "41250ade51fd6ececa47e5899918d9529e7f322df6a6de2db77c2683c30de6e2",
+      "attested_at": "2026-10-05",
+      "attested_commit": "522f9c28c0d42d0d351d9aa59f40495b3485e93f"
     },
     "pydantic_ai/code_execution.yaml": {
       "sha256": "c1c3cbd0f3b5024e62f02abe926a55c85d3b2094ae3e6988cdfb7613c783d62b",
@@ -376,9 +376,9 @@
       "attested_commit": "cfdfd46913007bba389c3096c7c022417c5dac66"
     },
     "pydantic_ai/ssrf.yaml": {
-      "sha256": "105932334430f4169b8a67011b0a76cf61906d7e12229bd5daea703560a35a2a",
-      "attested_at": "2026-08-04",
-      "attested_commit": "cfdfd46913007bba389c3096c7c022417c5dac66"
+      "sha256": "d020cd304568b925283cc838a8cd8f395debc4d624924840cd8579ef3a7eecbc",
+      "attested_at": "2026-10-05",
+      "attested_commit": "522f9c28c0d42d0d351d9aa59f40495b3485e93f"
     },
     "pydantic_ai/tool_definition.yaml": {
       "sha256": "4572c22b765e8d9b5e81b8b2401ae972706230707163ce4fdfbba9fe32a1ca9a",
@@ -386,9 +386,9 @@
       "attested_commit": "b72f0df9f65c26cd722442a7c9ffcd1439cee04e"
     },
     "vercel_ai/agent_safety.yaml": {
-      "sha256": "fee93dfa3de70e58db66cb35de557946696b59165af9f4c29ad9a3a2f4fa69ce",
-      "attested_at": "2026-08-04",
-      "attested_commit": "cfdfd46913007bba389c3096c7c022417c5dac66"
+      "sha256": "ce65913a9d7f2a92d56a97ad1d4cc86dc11b8fdb6ad4a270add59688322632ea",
+      "attested_at": "2026-10-05",
+      "attested_commit": "522f9c28c0d42d0d351d9aa59f40495b3485e93f"
     },
     "vercel_ai/code_execution.yaml": {
       "sha256": "9e05277ecee030f40a3ea36d04436be27c8766916c619a03f27a96feb8ae43e5",
@@ -411,9 +411,9 @@
       "attested_commit": "cfdfd46913007bba389c3096c7c022417c5dac66"
     },
     "vercel_ai/ssrf.yaml": {
-      "sha256": "c1af8d386c13c599c76b5b2b6f4b666814957b198bc196504620034c57e822e0",
-      "attested_at": "2026-08-04",
-      "attested_commit": "cfdfd46913007bba389c3096c7c022417c5dac66"
+      "sha256": "6334522f9047df9d4259839d81227be15df85012b15102153b9f57ee43fa7caf",
+      "attested_at": "2026-10-05",
+      "attested_commit": "522f9c28c0d42d0d351d9aa59f40495b3485e93f"
     },
     "vercel_ai/tool_definition.yaml": {
       "sha256": "55f0124ea475702e362336fbc4eb5a0eba0c817d962dae6d244108e735afac63",
@@ -539,6 +539,101 @@
       "sha256": "52179c533bf40dd796fe2d0f38f100adcd8f0973fe720ee316d84553f83ea842",
       "attested_at": "2026-09-21",
       "attested_commit": "b72f0df9f65c26cd722442a7c9ffcd1439cee04e"
+    },
+    "autogen/side_effect_bounds.yaml": {
+      "sha256": "de10e85791a78df7ae9e6226f1a389990f69a708f0c8eb65104bb0ec5223f8dd",
+      "attested_at": "2026-10-05",
+      "attested_commit": "522f9c28c0d42d0d351d9aa59f40495b3485e93f"
+    },
+    "autogen/tracing.yaml": {
+      "sha256": "b8d6c2a641d546382946b262fe8ca2bbd850e566f9047975e7df9b14e3e7ba0d",
+      "attested_at": "2026-10-05",
+      "attested_commit": "522f9c28c0d42d0d351d9aa59f40495b3485e93f"
+    },
+    "claude_sdk/side_effect_bounds.yaml": {
+      "sha256": "70031c0951653e051d9640c9e6e40bbaecc184fe6ba26ffdf0694fdace6ac9ad",
+      "attested_at": "2026-10-05",
+      "attested_commit": "522f9c28c0d42d0d351d9aa59f40495b3485e93f"
+    },
+    "claude_sdk/tracing.yaml": {
+      "sha256": "2f2422158f0026a35d7c1bb5db155ac2a92e3b0178b2cf9dd0ac47b8b8bf4b6c",
+      "attested_at": "2026-10-05",
+      "attested_commit": "522f9c28c0d42d0d351d9aa59f40495b3485e93f"
+    },
+    "crewai/side_effect_bounds.yaml": {
+      "sha256": "5e359eafc2f616b2bd4d854740de6f6f3d1c152af39fc0798316cc79b99d9b16",
+      "attested_at": "2026-10-05",
+      "attested_commit": "522f9c28c0d42d0d351d9aa59f40495b3485e93f"
+    },
+    "crewai/tracing.yaml": {
+      "sha256": "1d95e04b8970bfbc046a02803824f3fe6907e0af7913ac3f50a7425e50038d97",
+      "attested_at": "2026-10-05",
+      "attested_commit": "522f9c28c0d42d0d351d9aa59f40495b3485e93f"
+    },
+    "google_adk/side_effect_bounds.yaml": {
+      "sha256": "a39fcc1075c04b6137db04fc6ad798c97a00992990dc036dfc8860e3e8cb133c",
+      "attested_at": "2026-10-05",
+      "attested_commit": "522f9c28c0d42d0d351d9aa59f40495b3485e93f"
+    },
+    "google_adk/tracing.yaml": {
+      "sha256": "00cf7748a1167912dd64e00e54475034adbd66b94b7b833a15e9c0890a403fb3",
+      "attested_at": "2026-10-05",
+      "attested_commit": "522f9c28c0d42d0d351d9aa59f40495b3485e93f"
+    },
+    "langchain/side_effect_bounds.yaml": {
+      "sha256": "1a2fb38be05d9ebfefa9f484ee3c7799d2288c259a63ab4813d0849b3f1a0e9b",
+      "attested_at": "2026-10-05",
+      "attested_commit": "522f9c28c0d42d0d351d9aa59f40495b3485e93f"
+    },
+    "langchain/tracing.yaml": {
+      "sha256": "8d4f68b5a8a94b8e269ed35660fab23e32e620e599d2186a902c93f05afbebe9",
+      "attested_at": "2026-10-05",
+      "attested_commit": "522f9c28c0d42d0d351d9aa59f40495b3485e93f"
+    },
+    "mcp/side_effect_bounds.yaml": {
+      "sha256": "3a2ebd5574b342a0b0e69a948358d55f073a0dd1a6ea43715d7e98a9180d64f8",
+      "attested_at": "2026-10-05",
+      "attested_commit": "522f9c28c0d42d0d351d9aa59f40495b3485e93f"
+    },
+    "mcp/tracing.yaml": {
+      "sha256": "ddafd56ce6f56923358f563d93c8890ed51f35b4e02499016bb7dc5422d73451",
+      "attested_at": "2026-10-05",
+      "attested_commit": "522f9c28c0d42d0d351d9aa59f40495b3485e93f"
+    },
+    "observability/quality.yaml": {
+      "sha256": "9607083f97bc5abd374b623aabc2ac64e0244c36ee5c303e773362134fbd97de",
+      "attested_at": "2026-10-05",
+      "attested_commit": "522f9c28c0d42d0d351d9aa59f40495b3485e93f"
+    },
+    "openai_sdk/side_effect_bounds.yaml": {
+      "sha256": "9474f976cc2478d899e162a2fcfedba65d9113149afdaad51dc3e1ca5213d553",
+      "attested_at": "2026-10-05",
+      "attested_commit": "522f9c28c0d42d0d351d9aa59f40495b3485e93f"
+    },
+    "pydantic_ai/side_effect_bounds.yaml": {
+      "sha256": "4da49899a588afe6d949f1a1d6bcee5bd2d3ad8ee51a6e8440323f2da0688349",
+      "attested_at": "2026-10-05",
+      "attested_commit": "522f9c28c0d42d0d351d9aa59f40495b3485e93f"
+    },
+    "pydantic_ai/tracing.yaml": {
+      "sha256": "ca3de675b9f65780b84dbefd6983a5444ac4a39c23201c29730ba703bae3eebf",
+      "attested_at": "2026-10-05",
+      "attested_commit": "522f9c28c0d42d0d351d9aa59f40495b3485e93f"
+    },
+    "raw_llm_sdk/tool_output_trust.yaml": {
+      "sha256": "2a42191c8a285e1643be9385ebbcfdf5410f2c9c74e9f9d73d2c65bf143cb305",
+      "attested_at": "2026-10-05",
+      "attested_commit": "522f9c28c0d42d0d351d9aa59f40495b3485e93f"
+    },
+    "vercel_ai/side_effect_bounds.yaml": {
+      "sha256": "d69440beb64a05a00f6de1187825786cb9f8df6740546d24ff43828bbc96f2d2",
+      "attested_at": "2026-10-05",
+      "attested_commit": "522f9c28c0d42d0d351d9aa59f40495b3485e93f"
+    },
+    "vercel_ai/tracing.yaml": {
+      "sha256": "1d9fb24f8e424d4f885a4a06101000e65a018d1aa64a6626a972be8e060fcf88",
+      "attested_at": "2026-10-05",
+      "attested_commit": "522f9c28c0d42d0d351d9aa59f40495b3485e93f"
     }
   }
 }
