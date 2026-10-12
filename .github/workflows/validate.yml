@@ -93,13 +93,27 @@ jobs:
           printf '{"schemaVersion":1,"label":"rules","message":"%s","color":"brightgreen"}\n' "$n" \
             > badges/rules.json
 
+      # The badge holds only the current number, so it answers how many rules
+      # there are but never how fast the pack is growing. This keeps the series
+      # alongside it, one dated point per day.
+      #
+      # Recorded here rather than in a weekly cron because the count already
+      # exists in this job; a separate schedule would rebuild the engine purely
+      # to recompute a number this workflow is already holding.
+      - name: Record the rule count in the history
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        working-directory: rules
+        run: python3 scripts/record_rule_count.py '${{ steps.validate.outputs.count }}'
+
       - name: Open or update the badge PR
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           path: rules
-          add-paths: badges/rules.json
+          add-paths: |
+            badges/rules.json
+            .github/stats/rule-count-history.json
           branch: chore/rule-count-badge
           base: main
           commit-message: "chore(badges): rule count -> ${{ steps.validate.outputs.count }}"
@@ -109,7 +123,10 @@ jobs:
             **${{ steps.validate.outputs.count }}** rules on this commit.
 
             Updates `badges/rules.json`, the shields endpoint the README badge
-            reads. No-ops when the count is unchanged. Safe to merge.
+            reads, and appends today's point to
+            `.github/stats/rule-count-history.json` so growth over time is kept
+            rather than only the current number. No-ops when both are unchanged.
+            Safe to merge.
           author: "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
           committer: "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
           delete-branch: false
