@@ -154,3 +154,118 @@ rules:
       CallbackHandler, or an OpenTelemetry tracer provider with an exporter) —
       or remove it from the manifest so the SBOM stops claiming coverage this
       project does not have.
+
+  # ─── agent-reliability-otel-labels process labels (OBS-006..008) ──────────
+  # One ladder, three rungs: installed, a run started, the labels written.
+  # The rules are mutually exclusive — each fires at the first missing rung —
+  # and every one is gated on repo_observability_initialized: true, because
+  # the library only labels spans the agent already emits. A repo with no
+  # tracing gets the SDK's own absence rule instead, never these.
+  - id: OBS-006
+    title: Instrumented agent does not label its spans with agent-reliability-otel-labels
+    severity: low
+    confidence: 0.7
+    applies_to:
+      - claude_sdk
+      - openai_agents
+      - langchain
+      - pydantic_ai
+      - vercel_ai
+      - crewai
+      - google_adk
+      - autogen
+      - mcp
+    scope: repo
+    match:
+      all:
+        - repo_observability_initialized: true
+        - repo_otel_labels_installed: false
+    explanation: >
+      This repo initializes tracing, so the agent emits spans, but nothing
+      declares or imports agent-reliability-otel-labels. The spans record that
+      a tool ran without recording whether it was the same call as before,
+      whether it was a retry, whether it changed outside state, or how the run
+      ended. An agent repeating one call in a loop, a retry storm, and a run
+      that quietly hit its step cap all read as ordinary successful traces, so
+      each is found by someone reading spans by hand after the damage is done.
+    fix: >
+      Install agent-reliability-otel-labels (pip install
+      agent-reliability-otel-labels, or npm install
+      @trustabl/agent-reliability-otel-labels) and label the spans the agent
+      already emits: create a Run and call run.mark_start(root) on the root
+      span, call mark_tool_span on each tool span, and call mark_run_end before
+      the root span ends. Running trustabl forge writes these steps for this
+      repo's language and framework in its Runtime Tracing section.
+
+  - id: OBS-007
+    title: agent-reliability-otel-labels is installed but no run is ever started
+    severity: medium
+    confidence: 0.65
+    applies_to:
+      - claude_sdk
+      - openai_agents
+      - langchain
+      - pydantic_ai
+      - vercel_ai
+      - crewai
+      - google_adk
+      - autogen
+      - mcp
+    scope: repo
+    match:
+      all:
+        - repo_observability_initialized: true
+        - repo_otel_labels_installed: true
+        - repo_otel_labels_initialized: false
+    explanation: >
+      agent-reliability-otel-labels is declared or imported in this repo, but
+      no call to a Run's mark_start appears in the parsed source. That call is
+      what stamps the run identity on the root span. Without it the root span
+      carries no trustabl.run_id, so tool-span labels cannot be grouped into a
+      run and the order of steps cannot be rebuilt. The dependency and the
+      import both suggest the labels are in place, while an exported trace has
+      nothing that ties them together.
+    fix: >
+      Create one Run per agent run, inside the function that runs the agent,
+      and call run.mark_start(root) on the root span as soon as it is open
+      (run.markStart(root) in TypeScript). Never share one Run between runs.
+      Verify by exporting one run and checking that the root span carries
+      trustabl.run_id. Running trustabl forge writes the full pattern in its
+      Runtime Tracing section.
+
+  - id: OBS-008
+    title: An agent-reliability-otel-labels run is started but its spans are never labelled
+    severity: medium
+    confidence: 0.6
+    applies_to:
+      - claude_sdk
+      - openai_agents
+      - langchain
+      - pydantic_ai
+      - vercel_ai
+      - crewai
+      - google_adk
+      - autogen
+      - mcp
+    scope: repo
+    match:
+      all:
+        - repo_observability_initialized: true
+        - repo_otel_labels_initialized: true
+        - repo_otel_labels_implemented: false
+    explanation: >
+      A run is started with mark_start, but the labels the run exists to carry
+      are missing: either no mark_run_end call records how the run finished, or
+      this repo ships tools and no mark_tool_span call labels a tool span. The
+      root span then has a run id and nothing else — no input and output
+      fingerprints to show a repeated call, no attempt count to show a retry,
+      no side-effect class, and no exit reason, so a run stopped by its step
+      cap is indistinguishable from one that finished.
+    fix: >
+      In each tool, call mark_tool_span on the tool's span inside a finally
+      block so a failing call is still labelled, passing the arguments, the
+      result, a per-run attempt count, and the step index from run.next_step().
+      Call mark_run_end(root, exit_reason=...) before the root span ends, using
+      "error" on the exception path. Verify by exporting one run and checking
+      for trustabl.tool.input_fp on each tool span and trustabl.exit_reason on
+      the root span.
