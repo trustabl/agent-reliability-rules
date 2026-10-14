@@ -5,8 +5,8 @@ policy:
   description: >
     Agent-scope safety rules for Pydantic AI agents (the Agent(...) constructor).
     These flag missing output validation, model-driven code execution and URL
-    fetching wired as native tools, and a retry strategy that re-runs an
-    already-executed tool.
+    fetching wired as native tools, a FileUrl force_download that fetches on the
+    agent host, and a retry strategy that re-runs an already-executed tool.
 
 rules:
   - id: PYD-101
@@ -96,7 +96,52 @@ rules:
       an allow-list of permitted hosts, blocked private/link-local IP ranges, and
       a proxy that rejects requests to internal addresses. Prefer a purpose-built
       tool that fetches from a fixed, vetted set of endpoints over an open URL
-      fetcher, and treat retrieved or searched content as untrusted input.
+      fetcher, and treat retrieved or searched content as untrusted input. WebFetchTool's allowed_domains
+      narrows destinations on Anthropic only (Google ignores it), so it is not a
+      substitute for process-level egress controls.
+
+  - id: PYD-104
+    title: Pydantic AI FileUrl forces a host-side download
+    severity: medium
+    confidence: 0.7
+    language: python
+    applies_to:
+      - pydantic_ai_agent
+    scope: agent
+    match:
+      any:
+        - agent_file_url_force_download: true
+        - agent_hosted_tool_kwarg_value:
+            class: WebFetchTool
+            kwarg: force_download
+            value: "True"
+        - agent_hosted_tool_kwarg_value:
+            class: WebFetchTool
+            kwarg: force_download
+            value: "allow-local"
+    explanation: >
+      This agent constructs a FileUrl-family object (ImageUrl, AudioUrl, VideoUrl,
+      DocumentUrl) with force_download set to True or "allow-local", or wires a
+      WebFetchTool with the same kwarg. force_download=True makes the Pydantic AI
+      process download the URL itself instead of passing it through to the model
+      provider, so a prompt injection or a caller-supplied URL is fetched from
+      the agent host — the SSRF surface Pydantic AI's own fetchers have already
+      needed CVE fixes for (CVE-2026-46678, CVE-2026-25580). force_download=
+      "allow-local" goes further: the host still downloads, but private IPs are
+      allowed, which turns off the private-range half of that SSRF guard (cloud
+      metadata stays blocked). The default False lets providers that support URL
+      passthrough fetch the resource themselves, without opening a host-side
+      request.
+    fix: >
+      Leave force_download at its False default so the URL is passed to the
+      provider when it supports that, and never set "allow-local" in production.
+      If the host must download, keep force_download=True only for URLs you
+      control, put egress controls around the process (a host allow-list,
+      blocked private and link-local ranges), and reject caller- or
+      model-supplied URLs. On any endpoint that accepts client-submitted
+      FileUrls, run Pydantic AI's history sanitizer with
+      allowed_file_url_force_download left empty so True and "allow-local" are
+      reset.
 
   - id: PYD-105
     title: Pydantic AI agent retries with the exhaustive end strategy
@@ -151,3 +196,32 @@ rules:
       total_tokens_limit or input_tokens_limit/output_tokens_limit to bound
       token spend directly. Treat hitting the limit as a signal to surface and
       handle rather than to raise it.
+
+  - id: PYD-108
+    title: Pydantic AI run call has no wall-clock timeout
+    severity: low
+    confidence: 0.55
+    language: python
+    applies_to:
+      - pydantic_ai_agent
+    scope: agent
+    match:
+      agent_run_call_wall_clock_timeout_missing: true
+    explanation: >
+      No run/run_sync/run_stream call that executes this Pydantic AI agent is
+      wrapped in a wall-clock timeout (asyncio.wait_for, asyncio.timeout, or
+      anyio.move_on_after / fail_after). usage_limits caps request count and
+      token spend, but it does not bound how long a single model request or
+      tool call may block: a stalled provider connection or a slow tool hangs
+      the run indefinitely while it holds the worker and its tool
+      credentials. This is distinct from PYD-106 (usage_limits): a run can sit
+      well inside its limits and still never return. The check is structural —
+      a timeout elsewhere in the file that does not enclose the call is not
+      credited — and a timeout applied by the caller of the function
+      containing the call is not visible here.
+    fix: >
+      Wrap the call: await asyncio.wait_for(agent.run(prompt,
+      usage_limits=...), timeout=...) or run it inside async with
+      asyncio.timeout(...): sized to the task. Also set a request timeout via
+      ModelSettings(timeout=...) so an individual model call fails fast, and
+      treat TimeoutError as a failed run rather than retrying blindly.

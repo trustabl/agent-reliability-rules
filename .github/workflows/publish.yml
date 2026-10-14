@@ -90,7 +90,7 @@ jobs:
       - name: Checkout engine
         uses: actions/checkout@v4
         with:
-          repository: trustabl/trustabl
+          repository: trustabl/agent-reliability-analyzer
           ref: ${{ github.event.inputs.engine_ref }}
           path: engine
 

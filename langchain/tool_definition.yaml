@@ -77,3 +77,154 @@ rules:
       Pass a one-sentence description in the tool() config (or the
       DynamicStructuredTool options) naming what the tool does, the inputs it
       expects, and what it returns. Write it for the model, not a human reader.
+
+  - id: LC-018
+    title: LangChain tool description is a placeholder
+    severity: low
+    confidence: 0.85
+    language: python
+    applies_to:
+      - langchain_tool
+    scope: tool
+    match:
+      has_description_text:
+        - todo
+        - tbd
+        - fixme
+        - placeholder
+        - no description
+        - does stuff
+    explanation: >
+      The docstring passes the LC-001 has-a-description check but carries a
+      placeholder marker instead of real content. LangChain derives the tool
+      description from the docstring and puts it in front of the model as the
+      tool's only selection signal, so a stub like "TODO: describe this tool" is
+      functionally indistinguishable from no description at all — the model
+      still has to guess from the function name. The failure is quiet and gets
+      worse with scale: LangChain agents are routinely handed a dozen or more
+      tools at once, and mis-selection between similarly named neighbors shows
+      up as wrong answers and wasted executor iterations rather than as an
+      error anyone can trace back to this docstring.
+    fix: >
+      Replace the placeholder with a real description covering what the tool
+      does, what it returns, and when the model should call it rather than a
+      neighboring tool. Where the name alone is genuinely ambiguous, pass an
+      explicit description= at the @tool decorator instead of relying on the
+      docstring.
+
+  - id: LC-019
+    title: LangChain tool description is too short to guide model selection
+    severity: low
+    confidence: 0.8
+    language: python
+    applies_to:
+      - langchain_tool
+    scope: tool
+    match:
+      all:
+        - has_docstring: true
+        - description_length_lt: 40
+    explanation: >
+      A description under 40 characters is rarely enough to convey what a tool
+      does, what it returns, and when to call it rather than a similarly named
+      neighbor. LangChain passes this text to the model as the tool's only
+      selection signal, so a stub like "Gets data." leaves scope and
+      preconditions to guesswork. In an AgentExecutor loop the cost compounds:
+      each mis-selected call consumes an iteration against LC-102's
+      max_iterations budget, so a run can exhaust its steps re-trying tools it
+      picked badly and return nothing useful.
+    fix: >
+      Expand the description to at least a full sentence covering inputs,
+      outputs, and the situation in which this tool should be used over the
+      alternatives.
+
+  - id: LC-021
+    title: TypeScript LangChain tool description is a placeholder
+    severity: low
+    confidence: 0.85
+    language: typescript
+    applies_to:
+      - langchain_tool
+    scope: tool
+    match:
+      has_description_text:
+        - todo
+        - tbd
+        - fixme
+        - placeholder
+        - no description
+        - does stuff
+    explanation: >
+      The tool sets a description, so it passes LC-010, but the string is a
+      placeholder rather than real content. LangChain.js has no docstring to
+      fall back on — the description field is the entire account of the tool the
+      model sees — so "TODO: describe this tool" leaves the model guessing from
+      the tool name. The Zod schema does not compensate: it constrains the shape
+      of the arguments once the model has chosen this tool, never whether
+      choosing it was right. Mis-selection scales badly here because a
+      LangChain agent is routinely handed a dozen or more tools at once, and
+      each wrong pick consumes an iteration against the executor's maxIterations
+      budget, so a run can exhaust its steps and return nothing useful.
+    fix: >
+      Replace the placeholder with a real description covering what the tool
+      does, what it returns, and when the model should call it rather than a
+      neighboring tool. The string is passed to the model verbatim, so write it
+      for the model rather than a human maintainer.
+
+  - id: LC-022
+    title: TypeScript LangChain tool description is too short to guide model selection
+    severity: low
+    confidence: 0.8
+    language: typescript
+    applies_to:
+      - langchain_tool
+    scope: tool
+    match:
+      all:
+        - has_docstring: true
+        - description_length_lt: 40
+    explanation: >
+      A description under 40 characters is rarely enough to convey what a tool
+      does, what it returns, and when to call it rather than a similarly named
+      neighbor. With no docstring fallback in LangChain.js, a stub like "Gets
+      data." is the whole prompt-side account of the tool, so scope and
+      preconditions are left to guesswork. The cost compounds in the executor
+      loop: each mis-selected call spends an iteration against the
+      maxIterations bound LC-111 checks for, so a thin description can burn the
+      run's step budget rather than the run producing an answer.
+    fix: >
+      Expand the description to at least a full sentence covering inputs,
+      outputs, and the situation in which this tool should be used over the
+      alternatives. Where two tools are easy to confuse, say in each which one
+      the other case belongs to.
+
+  - id: LC-024
+    title: Ambiguous LangChain tool name
+    severity: low
+    confidence: 0.9
+    language: python
+    applies_to:
+      - langchain_tool
+    scope: tool
+    match:
+      name_in:
+        - process
+        - handle
+        - run
+        - do
+        - execute
+        - perform
+        - work
+        - go
+        - thing
+        - stuff
+    explanation: >
+      The tool name is a generic verb that says nothing about what the tool
+      acts on. The name sits directly beside the description in what the model
+      sees, so it is half the selection signal, and a name like process or
+      handle spends that half on nothing — the model either calls the tool for
+      the wrong job or passes over it entirely. A LangChain agent is routinely handed a dozen or more tools at once, so a name that does not discriminate competes against every neighbor in the list, and each wrong pick spends an iteration against LC-102's max_iterations budget.
+    fix: >
+      Rename to a verb-object form that names the thing acted on:
+      summarize_invoice, refund_charge, fetch_order_status. Keep the
+      description for the detail and let the name carry the subject.

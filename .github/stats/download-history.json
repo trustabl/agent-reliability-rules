@@ -1,0 +1,95 @@
+{
+  "repo": "trustabl/agent-reliability-rules",
+  "unit": "cumulative_release_downloads",
+  "history": [
+    {
+      "date": "2026-09-04",
+      "bundles": 541,
+      "statements": 19,
+      "other": 0,
+      "total": 560,
+      "since_baseline": {
+        "bundles": 0,
+        "total": 0
+      }
+    },
+    {
+      "date": "2026-09-07",
+      "bundles": 571,
+      "statements": 55,
+      "other": 0,
+      "total": 626,
+      "since_baseline": {
+        "bundles": 30,
+        "total": 66
+      }
+    },
+    {
+      "date": "2026-09-10",
+      "bundles": 744,
+      "statements": 284,
+      "other": 0,
+      "total": 1028,
+      "since_baseline": {
+        "bundles": 203,
+        "total": 468
+      }
+    },
+    {
+      "date": "2026-09-14",
+      "bundles": 852,
+      "statements": 412,
+      "other": 0,
+      "total": 1264,
+      "since_baseline": {
+        "bundles": 311,
+        "total": 704
+      }
+    },
+    {
+      "date": "2026-09-21",
+      "bundles": 1371,
+      "statements": 12,
+      "other": 0,
+      "total": 1383,
+      "since_baseline": {
+        "bundles": 830,
+        "total": 823
+      }
+    },
+    {
+      "date": "2026-09-28",
+      "bundles": 1456,
+      "statements": 150,
+      "other": 0,
+      "total": 1606,
+      "since_baseline": {
+        "bundles": 915,
+        "total": 1046
+      }
+    },
+    {
+      "date": "2026-10-05",
+      "bundles": 1565,
+      "statements": 114,
+      "other": 0,
+      "total": 1679,
+      "since_baseline": {
+        "bundles": 1024,
+        "total": 1119
+      }
+    },
+    {
+      "date": "2026-10-12",
+      "bundles": 1960,
+      "statements": 524,
+      "other": 0,
+      "total": 2484,
+      "since_baseline": {
+        "bundles": 1419,
+        "total": 1924
+      }
+    }
+  ],
+  "baseline_date": "2026-09-04"
+}

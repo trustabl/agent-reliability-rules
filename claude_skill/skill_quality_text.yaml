@@ -6,7 +6,8 @@ policy:
     Quality and data-governance signals in Claude Code Agent Skills (SKILL.md)
     detected via free-text matching over the skill's name, description, and
     body — claimed crypto/security purpose, sensitive-data handling, missing
-    error-handling or purpose language, and broad-access or retention phrasing.
+    error-handling or purpose language, placeholder descriptions, and
+    broad-access or retention phrasing.
     Skill rules audit SKILL.md frontmatter + body and are language-agnostic
     (markdown), so they carry no language: field.
 
@@ -19,29 +20,34 @@ rules:
       - claude_skill
     scope: skill
     match:
-      any:
-        - skill_name_has_text:
-            - crypto
-            - encrypt
-            - decrypt
-            - sign
-            - hash
-            - certificate
-            - signing
-            - cipher
-            - asymmetric
-            - symmetric
-        - skill_description_has_text:
-            - crypto
-            - encrypt
-            - decrypt
-            - sign
-            - hash
-            - certificate
-            - signing
-            - cipher
-            - asymmetric
-            - symmetric
+      skill_text_matches:
+        fields: [name, description]
+        terms:
+          - crypto
+          - cryptographic
+          - encrypt
+          - decrypt
+          - cipher
+          - certificate
+          - keypair
+          - private key
+          - sign
+          - signature
+          - hash
+          - hmac
+          - asymmetric
+          - symmetric
+        exclude_context:
+          - example
+          - for instance
+          - e.g.
+          - such as
+          - sample
+          - documented
+          - documentation
+          - see the
+          - refer to
+          - placeholder
     explanation: >
       This skill's name or description claims a cryptographic operation —
       encrypting, decrypting, signing, hashing, or certificate handling — but
@@ -50,6 +56,9 @@ rules:
       signature, or a hardcoded key all look like working code right up until
       they fail under attack, and a skill invoked without those specifics gives
       Claude no constraint to hold to when it writes the actual crypto code.
+      A mention that is clearly an example or a pointer to documentation (e.g.
+      "for instance, hash a string" or "see the crypto docs") does not count —
+      only a claim that the skill itself performs the operation does.
     fix: >
       State the exact primitive the skill uses (e.g. "AES-256-GCM via the
       `cryptography` library", "Ed25519 signing"), where keys or certificates
@@ -65,36 +74,63 @@ rules:
       - claude_skill
     scope: skill
     match:
-      any:
-        - skill_body_has_text:
-            - password
-            - secret
-            - token
-            - ssn
-            - credit card
-            - pii
-            - personal data
-            - sensitive
-            - confidential
-            - private key
-        - skill_description_has_text:
-            - password
-            - secret
-            - token
-            - ssn
-            - credit card
-            - pii
-            - personal data
-            - sensitive
-            - confidential
-            - private key
+      skill_text_matches:
+        fields: [description, body]
+        terms:
+          - password
+          - secret
+          - credential
+          - token
+          - api key
+          - ssn
+          - social security
+          - credit card
+          - pii
+          - personal data
+          - sensitive data
+          - confidential
+          - private key
+        require_context:
+          - read
+          - write
+          - store
+          - save
+          - send
+          - transmit
+          - collect
+          - process
+          - handle
+          - log
+          - extract
+          - parse
+          - redact
+          - encrypt
+          - upload
+          - post
+          - fetch
+          - retrieve
+          - access
+        exclude_context:
+          - lives in
+          - live in
+          - configured in
+          - see the
+          - documentation
+          - example
+          - for instance
+          - e.g.
     explanation: >
       This skill's body or description names a sensitive data class —
-      passwords, tokens, SSNs, credit card numbers, PII, or private keys —
-      without stating what it does with that data beyond naming it. Without an
-      explicit data-minimization boundary and a stated purpose, there is no way
-      to tell whether the skill only touches the fields the task actually
-      requires or whether it retains what it reads.
+      passwords, tokens, SSNs, credit card numbers, PII, or private keys — in
+      the same sentence as an operational verb (reads, stores, sends,
+      processes, ...), so it claims to actually handle that data rather than
+      merely mention it, without stating what it does with that data beyond
+      naming it. Without an explicit data-minimization boundary and a stated
+      purpose, there is no way to tell whether the skill only touches the
+      fields the task actually requires or whether it retains what it reads. A
+      sentence that only states where a credential already lives (e.g. "API
+      keys live in GitHub Actions secrets") does not count — only a claim that
+      the skill itself operates on the data does.
     fix: >
       Declare exactly which sensitive fields the skill reads, why it needs
       them, and how long it keeps them (ideally: not at all, beyond the current
@@ -117,7 +153,7 @@ rules:
             - scan
             - vulnerability
             - compliance
-        - skill_allows_tool:
+        - skill_allows_unrestricted_tool:
             - Bash
             - Write
             - Edit
@@ -126,15 +162,16 @@ rules:
     explanation: >
       This skill's name claims a security, audit, pentest, or compliance
       purpose — a role that is expected to observe and report, not mutate —
-      yet its allowed-tools pre-approve a side-effecting or exfiltration-
-      capable tool (Bash / Write / Edit / WebFetch / NotebookEdit). A skill
-      that can be steered into "auditing" a system while holding write or
-      shell access turns a read-first review into a privilege-escalation
-      path, whether by an ambiguous request or an injected instruction
-      encountered mid-audit.
+      yet its allowed-tools pre-approve an unrestricted side-effecting or
+      exfiltration-capable tool (Bash / Write / Edit / WebFetch /
+      NotebookEdit). A skill that can be steered into "auditing" a system
+      while holding unscoped write or shell access turns a read-first review
+      into a privilege-escalation path, whether by an ambiguous request or an
+      injected instruction encountered mid-audit.
     fix: >
       Narrow allowed-tools to the read-only set an audit role actually needs
-      (Read, Grep, Glob). If the skill genuinely must remediate what it finds,
+      (Read, Grep, Glob), or to scoped grants such as `Bash(git status:*)` or
+      `Edit(docs/**)`. If the skill genuinely must remediate what it finds,
       split remediation into a separate, explicitly-named skill so the
       audit-only skill's grants match what its name promises.
 
@@ -258,3 +295,34 @@ rules:
       hours, to support debugging"). If the skill doesn't need to persist
       anything beyond the current turn, say so explicitly instead of leaving
       it to be inferred.
+
+  - id: CSKILL-087
+    title: Skill description is a placeholder
+    severity: low
+    confidence: 0.85
+    applies_to:
+      - claude_skill
+    scope: skill
+    match:
+      skill_description_has_text:
+        - todo
+        - tbd
+        - fixme
+        - placeholder
+        - no description
+        - does stuff
+    explanation: >
+      This skill's description is present, so it passes the empty-description
+      check, but the text is a placeholder stub ("TODO", "TBD", "FIXME",
+      "placeholder", "no description", "does stuff") rather than a real
+      account of what the skill does. Claude Code always loads the description
+      into context and uses it to decide whether to auto-invoke the skill; a
+      stub gives the model no selection signal and a reviewer no basis for
+      judging the skill's tool grants — functionally the same as no
+      description at all, except CSKILL-070 never sees it.
+    fix: >
+      Replace the placeholder in the SKILL.md `description:` field with a
+      real one-to-two-sentence summary of what the skill does, which tools it
+      uses, and any side effects it may have. For example: "Summarises the
+      current git diff and posts a draft PR description. Uses Bash
+      (read-only git commands) and WebFetch."

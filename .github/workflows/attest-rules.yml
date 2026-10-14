@@ -36,7 +36,13 @@ jobs:
     # Keyless signing binds the signer identity to this workflow file at
     # refs/heads/main on THIS repo. A fork running the same schedule would
     # sign with a different (unpinnable) identity, so skip there.
-    if: github.repository == 'trustabl/trustabl-rules'
+    #
+    # Guard on the OWNER, not the full repo path. The owner is what actually
+    # distinguishes us from a fork, and a repo literal here is a silent
+    # failure waiting for a rename: this comparison is case-sensitive, a
+    # renamed repo makes it false, the job SKIPS, and the run still reports
+    # green. The signed ledger would stop updating with nothing to notice.
+    if: github.repository_owner == 'trustabl'
     steps:
       - name: Checkout rules
         uses: actions/checkout@v4

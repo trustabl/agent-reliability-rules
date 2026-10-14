@@ -1,0 +1,47 @@
+{
+  "repo": "trustabl/agent-reliability-rules",
+  "unit": "rules_in_pack",
+  "source": "trustabl rules validate",
+  "history": [
+    {
+      "date": "2026-09-04",
+      "rules": 208
+    },
+    {
+      "date": "2026-09-09",
+      "rules": 209
+    },
+    {
+      "date": "2026-09-10",
+      "rules": 210
+    },
+    {
+      "date": "2026-09-15",
+      "rules": 217
+    },
+    {
+      "date": "2026-09-21",
+      "rules": 276
+    },
+    {
+      "date": "2026-09-22",
+      "rules": 277
+    },
+    {
+      "date": "2026-09-29",
+      "rules": 298
+    },
+    {
+      "date": "2026-10-05",
+      "rules": 330
+    },
+    {
+      "date": "2026-10-12",
+      "rules": 333
+    },
+    {
+      "date": "2026-10-13",
+      "rules": 334
+    }
+  ]
+}

@@ -1,0 +1,102 @@
+name: Rule count history
+
+# Weekly snapshot of how many rules the pack contains.
+#
+# Why this exists alongside the hook in validate.yml. That hook records a point
+# whenever rules change on main, which captures every change but only when there
+# is one. A quiet week produces no push, so no point, and the series then cannot
+# distinguish "no rules were added" from "nothing was recorded". This fills the
+# quiet weeks so a flat line means flat rather than missing.
+#
+# Both paths call the same script and take the count from the same place, the
+# validator's own output, so the two cannot drift apart. Counting rule ids
+# directly here would be cheaper than building the engine, and is exactly how
+# the number went stale in three places before: there must be one derivation.
+#
+# Same-day reruns overwrite that day's point rather than appending, so running
+# this by hand after a merge is safe.
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'       # weekly, Mondays 06:00 UTC, an hour after the download snapshot
+  workflow_dispatch:           # run on demand to add a point now
+
+permissions:
+  contents: write              # push the branch the PR is built from
+  pull-requests: write         # open or update the snapshot PR
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout rules
+        uses: actions/checkout@v4
+        with:
+          path: rules
+
+      # The engine is checked out and built rather than downloaded so the count
+      # comes from the same validator validate.yml uses.
+      - name: Resolve engine ref
+        id: engineref
+        run: echo "ref=main" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout engine
+        uses: actions/checkout@v4
+        with:
+          repository: trustabl/agent-reliability-analyzer
+          ref: ${{ steps.engineref.outputs.ref }}
+          path: engine
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: engine/go.mod
+          cache: true
+          cache-dependency-path: engine/go.sum
+
+      - name: Build the validator
+        working-directory: engine
+        run: go build -o "$RUNNER_TEMP/trustabl" ./cmd/trustabl
+
+      - name: Count the rules
+        id: validate
+        run: |
+          out="$("$RUNNER_TEMP/trustabl" rules validate ./rules)"
+          echo "$out"
+          count=$(printf '%s' "$out" | sed -n 's/.*, \([0-9][0-9]*\) rule(s) valid.*/\1/p')
+          echo "count=$count" >> "$GITHUB_OUTPUT"
+
+      # The script exits non-zero on an empty or unparsed count, so a change in
+      # the validator's output shape fails the run instead of silently writing
+      # nothing and leaving a gap that reads as a quiet week.
+      - name: Record the point
+        working-directory: rules
+        run: python3 scripts/record_rule_count.py '${{ steps.validate.outputs.count }}'
+
+      # main is protection-gated, so this lands as a PR. create-pull-request
+      # reuses one rolling branch and no-ops when the file is unchanged, so a
+      # week with no new rules opens nothing.
+      - name: Open or update the snapshot PR
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          path: rules
+          add-paths: .github/stats/rule-count-history.json
+          branch: chore/rule-count-history
+          base: main
+          commit-message: "chore: record weekly rule-count snapshot"
+          title: "chore: weekly rule-count snapshot"
+          body: |
+            Automated weekly snapshot of how many rules the pack contains,
+            reported by `trustabl rules validate` on this commit:
+            **${{ steps.validate.outputs.count }}** rules.
+
+            Updates `.github/stats/rule-count-history.json`. One point per day,
+            upserted, so this never duplicates a day already recorded. Safe to
+            merge.
+
+            The badge in `badges/rules.json` is refreshed separately by
+            `validate.yml` when rules actually change; this workflow only keeps
+            the history continuous through weeks where nothing changed.
+          author: "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
+          committer: "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
+          delete-branch: false

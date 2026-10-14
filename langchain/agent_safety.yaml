@@ -84,7 +84,143 @@ rules:
       handleParsingErrors so a malformed step is surfaced rather than retried
       indefinitely.
 
-  - id: LC-112
+  - id: LC-103
+    title: LangChain agent wires a raw HTTP Requests built-in tool
+    severity: medium
+    confidence: 0.75
+    language: python
+    applies_to:
+      - langchain_agent
+      - langchain_agent_executor
+      - langchain_state_graph
+    scope: agent
+    match:
+      agent_uses_hosted_tool_class:
+        - RequestsGetTool
+        - RequestsPostTool
+        - RequestsPutTool
+        - RequestsPatchTool
+        - RequestsDeleteTool
+    explanation: >
+      This agent's tools list includes a langchain_community Requests built-in
+      (RequestsGetTool / RequestsPostTool / RequestsPutTool / RequestsPatchTool /
+      RequestsDeleteTool). These tools issue an outbound HTTP request to a URL the
+      model supplies; only the method is fixed by the class. Because the
+      destination is model-chosen rather than pinned by the tool, a prompt
+      injection in content the agent has already read can steer the request at
+      whatever the agent host can reach — the cloud metadata endpoint
+      (169.254.169.254), a localhost admin port, or an internal service no
+      external caller could address. The write-method variants can mutate those
+      services rather than only read them, and each response body returns into the
+      conversation as untrusted text that may carry a further injection. LangChain
+      gates this family behind allow_dangerous_requests=True precisely because it
+      hands the model an unconstrained fetch.
+    fix: >
+      Prefer a purpose-built tool that pins the base URL and accepts only a path
+      or query from the model over the generic Requests built-in. Where open HTTP
+      is genuinely required, constrain the destination: allow-list the permitted
+      hosts, reject private and link-local ranges, re-validate the destination
+      after every redirect, and route the agent's egress through a proxy that
+      refuses internal addresses. Treat each response body as untrusted input —
+      keep it out of the system prompt and do not let it widen the agent's tool
+      permissions.
+
+  - id: LC-113
+    title: LangChain AgentExecutor has no explicit max_execution_time limit
+    severity: low
+    confidence: 0.6
+    language: python
+    applies_to:
+      - langchain_agent_executor
+    scope: agent
+    match:
+      agent_kwarg_missing:
+        - max_execution_time
+    explanation: >
+      This AgentExecutor sets no max_execution_time, so nothing bounds how many
+      seconds a run may take. max_iterations caps the number of tool round-trips,
+      but one iteration that blocks on a slow tool or a stalled model call is not
+      counted by it, so the run can hang or stretch well past any latency budget
+      while it holds tools and credentials live.
+    fix: >
+      Pass max_execution_time= (seconds) to AgentExecutor, sized to the task, next
+      to max_iterations=. Set timeouts on the tools it calls too, so the executor
+      limit is a backstop rather than the only bound.
+
+  - id: LC-114
+    title: LangGraph StateGraph is compiled with no checkpointer
+    severity: medium
+    confidence: 0.6
+    language: python
+    applies_to:
+      - langchain_state_graph
+    scope: agent
+    match:
+      all:
+        - agent_kwargs_observed: true
+        - agent_kwarg_missing:
+            - checkpointer
+        - repo_langgraph_platform_config_present: false
+    explanation: >
+      This StateGraph is compiled with no checkpointer=, so the graph keeps no
+      persisted run state. A crash, a restart, a deploy, or an interrupt()
+      pause loses everything the run had done — completed steps, tool results,
+      and the pending human-approval point itself — and a retry re-executes
+      side-effecting nodes from the start. interrupt_before / interrupt_after
+      and interrupt() also need a checkpointer to resume, so a graph without
+      one cannot actually pause for approval. The rule stays silent when the
+      repo ships a langgraph.json (LangGraph Platform injects its own
+      checkpointer), and it cannot see a subgraph compiled in another file,
+      which inherits its parent's checkpointer — treat a hit on a subgraph as
+      a false positive.
+    fix: >
+      Pass checkpointer= to .compile(), e.g. builder.compile(checkpointer=
+      PostgresSaver(...)) for production (MemorySaver only for tests), and
+      invoke with a config={"configurable": {"thread_id": ...}}. If this graph
+      runs only on LangGraph Platform, add the langgraph.json the platform
+      expects so the intent is explicit.
+
+  - id: LC-116
+    title: LangGraph graph with an in-memory checkpointer is run from a server entrypoint
+    severity: high
+    confidence: 0.6
+    language: python
+    applies_to:
+      - langchain_state_graph
+      - langchain_agent
+    scope: agent
+    match:
+      all:
+        - agent_checkpointer_in_memory: true
+        - agent_server_reachable: true
+        - repo_langgraph_platform_config_present: false
+    explanation: >
+      This graph's checkpointer is MemorySaver / InMemorySaver, and it is run
+      from a server entrypoint (a FastAPI or Flask route, or a Celery or
+      Dramatiq task). An in-memory saver keeps every thread's state in a dict
+      inside one process: a restart, a deploy, a crash, or a second worker
+      loses all in-flight threads, their completed steps, and any interrupt()
+      pause awaiting human approval, and a retry re-executes side-effecting
+      nodes from the start. Because a checkpointer is configured, the graph
+      looks durable when it is not. Limits: reachability follows one hop per
+      edge (the entrypoint itself, a same-file helper it calls, or an imported
+      helper it calls), so a graph run through a helper of a helper is not
+      seen; a graph built or compiled inside a factory function is not
+      tracked; a saver chosen at runtime (an environment variable, a config
+      object) is not resolved and stays silent; a subgraph is reported only
+      when it is itself invoked from a server path; test paths are ignored;
+      the rule is silent when the repo ships a langgraph.json (LangGraph
+      Platform injects its own checkpointer). Recall on real server code is
+      unmeasured.
+    fix: >
+      Pass a durable checkpointer in production, e.g.
+      builder.compile(checkpointer=PostgresSaver(...)) or AsyncPostgresSaver /
+      RedisSaver (the same checkpointer= applies to create_react_agent), and
+      keep MemorySaver for tests. Invoke with
+      config={"configurable": {"thread_id": ...}} so each conversation resumes
+      from its own persisted thread.
+
+  - id: LC-117
     title: LangChain privileged create_agent lacks human-approval prerequisites
     severity: high
     confidence: 0.7

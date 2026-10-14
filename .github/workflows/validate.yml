@@ -17,6 +17,12 @@ on:
 env:
   CGO_ENABLED: "1"
 
+# contents: write is only exercised on a push to main, to refresh the generated
+# rule-count badge. PR runs never write.
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   validate:
     runs-on: ubuntu-latest
@@ -27,17 +33,17 @@ jobs:
           path: rules
 
       # Validate against the engine's rule schema. A coordinated change ships as
-      # paired PRs (one in trustabl/trustabl, one here) sharing a branch name, so
-      # check out the engine at the same-named branch when it exists, otherwise
-      # main. This mirrors the engine repo's own rules-sync job in reverse, and
-      # means a schema bump in the engine and the rules that use it validate
-      # together before either merges.
+      # paired PRs (one in trustabl/agent-reliability-analyzer, one here)
+      # sharing a branch name, so check out the engine at the same-named branch
+      # when it exists, otherwise main. This mirrors the engine repo's own
+      # rules-sync job in reverse, and means a schema bump in the engine and the
+      # rules that use it validate together before either merges.
       - name: Resolve engine ref
         id: engineref
         run: |
           ref="${{ github.head_ref }}"
           if [ -n "$ref" ] && git ls-remote --exit-code --heads \
-              https://github.com/trustabl/trustabl.git "$ref" >/dev/null 2>&1; then
+              https://github.com/trustabl/agent-reliability-analyzer.git "$ref" >/dev/null 2>&1; then
             echo "ref=$ref" >> "$GITHUB_OUTPUT"
           else
             echo "ref=main" >> "$GITHUB_OUTPUT"
@@ -46,7 +52,7 @@ jobs:
       - name: Checkout engine
         uses: actions/checkout@v4
         with:
-          repository: trustabl/trustabl
+          repository: trustabl/agent-reliability-analyzer
           ref: ${{ steps.engineref.outputs.ref }}
           path: engine
 
@@ -61,5 +67,66 @@ jobs:
         run: go build -o "$RUNNER_TEMP/trustabl" ./cmd/trustabl
 
       - name: Validate rule packs
+        id: validate
         run: |
-          "$RUNNER_TEMP/trustabl" rules validate ./rules
+          out="$("$RUNNER_TEMP/trustabl" rules validate ./rules)"
+          echo "$out"
+          count=$(printf '%s' "$out" | sed -n 's/.*, \([0-9][0-9]*\) rule(s) valid.*/\1/p')
+          echo "count=$count" >> "$GITHUB_OUTPUT"
+
+      # The rule count was hardcoded in three places and disagreed with reality in
+      # all three (206 badge / 206 prose / 185+ prose, actual 204). It is generated
+      # from the validator's own output instead, so there is one source and it
+      # cannot go stale. shields.io reads badges/rules.json as an endpoint badge.
+      #
+      # This lands via a PR rather than a direct push. main is protection-gated, and
+      # the earlier direct-push version failed silently: it committed the right
+      # number, could not push, and the `|| warning` left the job green while the
+      # badge sat stale. A PR cannot fail quietly.
+      - name: Refresh the rule-count badge
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        working-directory: rules
+        run: |
+          n='${{ steps.validate.outputs.count }}'
+          [ -n "$n" ] || { echo "::error::no rule count parsed from validator"; exit 1; }
+          mkdir -p badges
+          printf '{"schemaVersion":1,"label":"rules","message":"%s","color":"brightgreen"}\n' "$n" \
+            > badges/rules.json
+
+      # The badge holds only the current number, so it answers how many rules
+      # there are but never how fast the pack is growing. This keeps the series
+      # alongside it, one dated point per day.
+      #
+      # Recorded here rather than in a weekly cron because the count already
+      # exists in this job; a separate schedule would rebuild the engine purely
+      # to recompute a number this workflow is already holding.
+      - name: Record the rule count in the history
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        working-directory: rules
+        run: python3 scripts/record_rule_count.py '${{ steps.validate.outputs.count }}'
+
+      - name: Open or update the badge PR
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          path: rules
+          add-paths: |
+            badges/rules.json
+            .github/stats/rule-count-history.json
+          branch: chore/rule-count-badge
+          base: main
+          commit-message: "chore(badges): rule count -> ${{ steps.validate.outputs.count }}"
+          title: "chore(badges): rule count -> ${{ steps.validate.outputs.count }}"
+          body: |
+            Regenerated from `trustabl rules validate`, which reported
+            **${{ steps.validate.outputs.count }}** rules on this commit.
+
+            Updates `badges/rules.json`, the shields endpoint the README badge
+            reads, and appends today's point to
+            `.github/stats/rule-count-history.json` so growth over time is kept
+            rather than only the current number. No-ops when both are unchanged.
+            Safe to merge.
+          author: "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
+          committer: "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
+          delete-branch: false
