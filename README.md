@@ -153,6 +153,7 @@ vercel_ai/                            Vercel AI SDK rules (VAI-NNN, all typescri
 └── tool_definition.yaml              VAI-004, VAI-005
 
 agent_config/                         Pre-trust harness config rules (AGCFG-NNN, MCPCFG-NNN; repo scope, no SDK gate)
+├── codex_hooks.yaml                  AGCFG-008
 ├── mcp_client_config.yaml            MCPCFG-002
 └── preauth_execution.yaml            AGCFG-004..007
 ```
