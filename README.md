@@ -156,7 +156,7 @@ agent_config/                         Pre-trust harness config rules (AGCFG-NNN,
 ├── agents_md.yaml                    AGCFG-009
 ├── codex_hooks.yaml                  AGCFG-008
 ├── harness_guidance.yaml             AGCFG-010
-├── mcp_client_config.yaml            MCPCFG-002
+├── mcp_client_config.yaml            MCPCFG-002, MCPCFG-003
 └── preauth_execution.yaml            AGCFG-004..007
 ```
 
