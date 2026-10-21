@@ -155,10 +155,12 @@ against a fixed token:
 | `claude_subagent`  | A `.claude/agents/*.md` subagent declaration (any path depth)   |
 
 Subagent rules use the `subagent_grants_tool` predicate (true when
-`SubagentDef.Tools` contains a listed tool name). They carry **no `language:`
+`SubagentDef.Tools` contains a listed tool name) or `subagent_inherits_all_tools`
+(true for a `.claude/agents/` file with no `tools` key and no `disallowedTools`
+entries). They carry **no `language:`
 field** — subagents are markdown frontmatter, not code, and the engine's
 `subagentRuleDetector.Applies` does not gate on language. The shipped rules are
-CSDK-110, CSDK-111, and CSDK-112 in `claude_sdk/subagent_safety.yaml`.
+CSDK-110, CSDK-111, CSDK-112, and CSDK-115 in `claude_sdk/subagent_safety.yaml`.
 
 **`scope: skill`** — receives a `SkillDef` (one Claude Code Agent Skill,
 `SKILL.md` plus the files bundled beside it). `applies_to` is matched against a
