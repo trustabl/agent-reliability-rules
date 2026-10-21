@@ -155,6 +155,7 @@ vercel_ai/                            Vercel AI SDK rules (VAI-NNN, all typescri
 agent_config/                         Pre-trust harness config rules (AGCFG-NNN, MCPCFG-NNN; repo scope, no SDK gate)
 ├── agents_md.yaml                    AGCFG-009
 ├── codex_hooks.yaml                  AGCFG-008
+├── fetch_permissions.yaml            AGCFG-011
 ├── harness_guidance.yaml             AGCFG-010
 ├── mcp_client_config.yaml            MCPCFG-002
 └── preauth_execution.yaml            AGCFG-004..007
