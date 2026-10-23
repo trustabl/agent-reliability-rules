@@ -158,10 +158,14 @@ agent_config/                         Pre-trust harness config rules (AGCFG-NNN,
 ├── harness_guidance.yaml             AGCFG-010
 ├── mcp_client_config.yaml            MCPCFG-002
 └── preauth_execution.yaml            AGCFG-004..007
+
+ci/                                   Coding agents in GitHub Actions workflows (CI-NNN; repo scope, no SDK gate)
+├── untrusted_triggers.yaml           CI-001, CI-002
+└── agent_hardening.yaml              CI-003..005
 ```
 
-The `agent_config` families are cross-harness config rules, so they sit outside the
-SDK-prefix numbering below (AGCFG-001..003 and MCPCFG-001 are unused).
+The `agent_config` and `ci` families are cross-harness config rules, so they sit outside the
+SDK-prefix numbering below (AGCFG-001..003 and MCPCFG-001 are unused; CI rules number by topic).
 
 ID prefix denotes SDK; `NNN` tool scope, `1NN` agent / subagent scope, `2NN`
 repo scope. Two packs predate that convention: `autogen/` numbers its agent
