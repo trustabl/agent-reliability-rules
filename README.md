@@ -151,7 +151,17 @@ vercel_ai/                            Vercel AI SDK rules (VAI-NNN, all typescri
 ├── shell_safety.yaml                 VAI-001
 ├── ssrf.yaml                         VAI-003
 └── tool_definition.yaml              VAI-004, VAI-005
+
+agent_config/                         Pre-trust harness config rules (AGCFG-NNN, MCPCFG-NNN; repo scope, no SDK gate)
+├── agents_md.yaml                    AGCFG-009
+├── codex_hooks.yaml                  AGCFG-008
+├── harness_guidance.yaml             AGCFG-010
+├── mcp_client_config.yaml            MCPCFG-002
+└── preauth_execution.yaml            AGCFG-004..007
 ```
+
+The `agent_config` families are cross-harness config rules, so they sit outside the
+SDK-prefix numbering below (AGCFG-001..003 and MCPCFG-001 are unused).
 
 ID prefix denotes SDK; `NNN` tool scope, `1NN` agent / subagent scope, `2NN`
 repo scope. Two packs predate that convention: `autogen/` numbers its agent
