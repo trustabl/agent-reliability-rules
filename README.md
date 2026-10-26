@@ -67,7 +67,7 @@ claude_sdk/                           Claude Agent SDK rules (CSDK-NNN)
 ├── repo_hygiene.yaml                 CSDK-203 (repo scope, CLAUDE.md missing)
 ├── shell_safety.yaml                 CSDK-108 (python), CSDK-010 (typescript)
 ├── ssrf.yaml                         CSDK-009 (python), CSDK-013 (typescript)
-├── subagent_safety.yaml              CSDK-110..112 (subagent scope)
+├── subagent_safety.yaml              CSDK-110..112, CSDK-115 (subagent scope)
 └── tool_definition.yaml              CSDK-001, CSDK-002, CSDK-007, CSDK-008, CSDK-017, CSDK-018 (python); CSDK-014 (typescript)
 openai_sdk/                           OpenAI Agents SDK rules (OAI-NNN)
 ├── agent_safety.yaml                 OAI-101..104, OAI-109, OAI-110, OAI-112 (agent); OAI-105 (agent, typescript)
@@ -157,12 +157,16 @@ agent_config/                         Pre-trust harness config rules (AGCFG-NNN,
 ├── codex_hooks.yaml                  AGCFG-008
 ├── fetch_permissions.yaml            AGCFG-011
 ├── harness_guidance.yaml             AGCFG-010
-├── mcp_client_config.yaml            MCPCFG-002
+├── mcp_client_config.yaml            MCPCFG-002, MCPCFG-003
 └── preauth_execution.yaml            AGCFG-004..007
+
+ci/                                   Coding agents in GitHub Actions workflows (CI-NNN; repo scope, no SDK gate)
+├── untrusted_triggers.yaml           CI-001, CI-002
+└── agent_hardening.yaml              CI-003..005
 ```
 
-The `agent_config` families are cross-harness config rules, so they sit outside the
-SDK-prefix numbering below (AGCFG-001..003 and MCPCFG-001 are unused).
+The `agent_config` and `ci` families are cross-harness config rules, so they sit outside the
+SDK-prefix numbering below (AGCFG-001..003 and MCPCFG-001 are unused; CI rules number by topic).
 
 ID prefix denotes SDK; `NNN` tool scope, `1NN` agent / subagent scope, `2NN`
 repo scope. Two packs predate that convention: `autogen/` numbers its agent
