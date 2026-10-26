@@ -128,6 +128,7 @@ enum values used by the `repo_has_sdk_in_code` predicate:
 | `vercel_ai`        | Vercel AI SDK                        |
 | `autogen`          | AutoGen / AG2                        |
 | `raw_llm_sdk`      | Bare `anthropic` / `openai` client usage (no agent framework); category `raw_llm_sdk` loads unconditionally, the rule's own predicate gates |
+| `github_actions`   | Coding agents in GitHub Actions workflows (repo-root `.github/workflows/*.yml`); category `ci` loads unconditionally, the rule's own `repo_ci_agent_*` predicate gates. One finding per step that runs an offending agent (CI-003: per checkout step), carrying that step's file and line |
 | `agent_config`     | Pre-trust harness config committed to the repo (`.claude/settings.json`, `.mcp.json`, `.gemini/.env`, `.vscode/settings.json`, `.codex/config.toml`); category `agent_config` loads unconditionally, the rule's own `repo_*` predicate gates. Findings carry the offending file and line |
 
 Repo-scope rules typically combine `applies_to` with a `repo_has_sdk_in_code`
@@ -155,10 +156,12 @@ against a fixed token:
 | `claude_subagent`  | A `.claude/agents/*.md` subagent declaration (any path depth)   |
 
 Subagent rules use the `subagent_grants_tool` predicate (true when
-`SubagentDef.Tools` contains a listed tool name). They carry **no `language:`
+`SubagentDef.Tools` contains a listed tool name) or `subagent_inherits_all_tools`
+(true for a `.claude/agents/` file with no `tools` key and no `disallowedTools`
+entries). They carry **no `language:`
 field** — subagents are markdown frontmatter, not code, and the engine's
 `subagentRuleDetector.Applies` does not gate on language. The shipped rules are
-CSDK-110, CSDK-111, and CSDK-112 in `claude_sdk/subagent_safety.yaml`.
+CSDK-110, CSDK-111, CSDK-112, and CSDK-115 in `claude_sdk/subagent_safety.yaml`.
 
 **`scope: skill`** — receives a `SkillDef` (one Claude Code Agent Skill,
 `SKILL.md` plus the files bundled beside it). `applies_to` is matched against a
