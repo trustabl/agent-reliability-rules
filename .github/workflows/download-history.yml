@@ -37,7 +37,7 @@ name: Download history
 
 on:
   schedule:
-    - cron: '0 5 * * 1'       # weekly, Mondays 05:00 UTC
+    - cron: '0 16 * * 0'      # weekly, Monday 00:00 Philippine time (UTC+8) = Sunday 16:00 UTC
   workflow_dispatch:           # run on demand to add a point now
 
 permissions:
@@ -101,7 +101,8 @@ jobs:
               page += 1
 
           total = bundles + statements + other
-          day   = datetime.date.today().isoformat()   # UTC on the runner
+          # Philippine date (UTC+8): the run starts Monday 00:00 there, which is still Sunday in UTC.
+          day   = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).date().isoformat()
 
           if os.path.exists(path):
               with open(path) as f:
