@@ -86,9 +86,9 @@
       "attested_commit": "522f9c28c0d42d0d351d9aa59f40495b3485e93f"
     },
     "claude_sdk/subagent_safety.yaml": {
-      "sha256": "5da4b1a5babe4bc92e279ee81bf5fb6fe5f12ceb13f1ace05b2ff04ec83b6ecc",
-      "attested_at": "2026-09-21",
-      "attested_commit": "b72f0df9f65c26cd722442a7c9ffcd1439cee04e"
+      "sha256": "6b9666f32d1684f1e74cbc562bb7b45926c8498ca92afea07eb9e1a24fdeb6b1",
+      "attested_at": "2026-11-02",
+      "attested_commit": "89cb797cb22b02338c59baffc3a76568151541b2"
     },
     "claude_sdk/tool_definition.yaml": {
       "sha256": "f2fe9e50d7e29a476480b166cd887c99085e5a2ac28767728994def0e0af011a",
@@ -636,9 +636,9 @@
       "attested_commit": "522f9c28c0d42d0d351d9aa59f40495b3485e93f"
     },
     "agent_config/mcp_client_config.yaml": {
-      "sha256": "4107b629057f3a77794134c99437083d24ee64618f21d738b2e6be4a49378427",
-      "attested_at": "2026-10-19",
-      "attested_commit": "f57df3f914d3a14dbf6a254b68a2292a5804d798"
+      "sha256": "4d1d77275b5836faf6279ee5dc7f83fd2b8d16856f3e62f5d0242cab5fdc783b",
+      "attested_at": "2026-11-02",
+      "attested_commit": "89cb797cb22b02338c59baffc3a76568151541b2"
     },
     "agent_config/preauth_execution.yaml": {
       "sha256": "daecfdc33bedd17a3bfc14895e0b1becdb72fcbe18d7b250f540022a4fab116c",
@@ -669,6 +669,66 @@
       "sha256": "a06526cfcb0ef5405520383ec844a0a99133eb237163aab2d3633e9854b672a2",
       "attested_at": "2026-10-26",
       "attested_commit": "bc5f0defe20e4598c4e5b677b90a8f8b0c70601e"
+    },
+    "agent_config/exec_capable_allow.yaml": {
+      "sha256": "f6b31b5d5074da55bfbc5b0b1c29f57c237122b70787e28d508abe964d9b8c10",
+      "attested_at": "2026-11-02",
+      "attested_commit": "89cb797cb22b02338c59baffc3a76568151541b2"
+    },
+    "agent_config/fetch_permissions.yaml": {
+      "sha256": "7ea908c34ef0500945903343051251da48192e41d8969613a75320665e748815",
+      "attested_at": "2026-11-02",
+      "attested_commit": "89cb797cb22b02338c59baffc3a76568151541b2"
+    },
+    "agent_config/guidance_hidden_text.yaml": {
+      "sha256": "00e089cd92b1e08ff08ab03267ced46cfb5007cf2c5e154a734aa90ee042c271",
+      "attested_at": "2026-11-02",
+      "attested_commit": "89cb797cb22b02338c59baffc3a76568151541b2"
+    },
+    "agent_config/model_endpoint_override.yaml": {
+      "sha256": "f4c0a205eaa24cc5f14fd97fbd36d886c54d52ab1b093f184747718ffc6554e2",
+      "attested_at": "2026-11-02",
+      "attested_commit": "89cb797cb22b02338c59baffc3a76568151541b2"
+    },
+    "autogen/tool_call_claims.yaml": {
+      "sha256": "0ce88f08bbf25eff4cfaa59213d79e84b56af4cad12d3290c0693b5cbf0546d2",
+      "attested_at": "2026-11-02",
+      "attested_commit": "89cb797cb22b02338c59baffc3a76568151541b2"
+    },
+    "claude_sdk/tool_call_claims.yaml": {
+      "sha256": "86e2cbc4b37c2e0d37df58d4c29876e0bccb1574d8f1198ec4fad6abd8d53990",
+      "attested_at": "2026-11-02",
+      "attested_commit": "89cb797cb22b02338c59baffc3a76568151541b2"
+    },
+    "crewai/tool_call_claims.yaml": {
+      "sha256": "96dd38fd5417ce32cb4af3505bdd5149e1a9c2f350f75c0634fa90aeca1d72e4",
+      "attested_at": "2026-11-02",
+      "attested_commit": "89cb797cb22b02338c59baffc3a76568151541b2"
+    },
+    "google_adk/tool_call_claims.yaml": {
+      "sha256": "236adfdf36300c47360fab9948b5d176de0c7bf88a91c64df448aeadca2550da",
+      "attested_at": "2026-11-02",
+      "attested_commit": "89cb797cb22b02338c59baffc3a76568151541b2"
+    },
+    "langchain/tool_call_claims.yaml": {
+      "sha256": "81e1f052a135a4ab62f1ef0d2ec8723edf354e8cc7605aa5d4730f12b5085937",
+      "attested_at": "2026-11-02",
+      "attested_commit": "89cb797cb22b02338c59baffc3a76568151541b2"
+    },
+    "mcp/tool_call_claims.yaml": {
+      "sha256": "e8f96eb6dd4c5abc2dfbfb11f18d615c2c230cf9c8518cda2daf38a91e7ca119",
+      "attested_at": "2026-11-02",
+      "attested_commit": "89cb797cb22b02338c59baffc3a76568151541b2"
+    },
+    "openai_sdk/tool_call_claims.yaml": {
+      "sha256": "e91340b88805f56b439e8a1ddba543d32b85667a60e1fab5385a5ee2a1ea6ef9",
+      "attested_at": "2026-11-02",
+      "attested_commit": "89cb797cb22b02338c59baffc3a76568151541b2"
+    },
+    "pydantic_ai/tool_call_claims.yaml": {
+      "sha256": "cdf034e8877240016894231017f7c3a7f2709ba041f970cf34e6ee52db1c302f",
+      "attested_at": "2026-11-02",
+      "attested_commit": "89cb797cb22b02338c59baffc3a76568151541b2"
     }
   }
 }
