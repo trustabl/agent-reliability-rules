@@ -40,7 +40,8 @@ def main():
 
     doc = json.loads(HISTORY.read_text(encoding="utf-8")) if HISTORY.exists() else dict(EMPTY)
 
-    day = datetime.date.today().isoformat()  # UTC on the runner
+    # Philippine date (UTC+8): the weekly run starts Monday 00:00 there, which is still Sunday in UTC.
+    day = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).date().isoformat()
     points = {p["date"]: p for p in doc.get("history", [])}
     points[day] = {"date": day, "rules": count}
     doc["history"] = [points[d] for d in sorted(points)]

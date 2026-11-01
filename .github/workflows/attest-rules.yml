@@ -12,10 +12,10 @@ name: Attest rule pack
 
 on:
   schedule:
-    # Every Monday, 00:00 UTC. Not tied to pushes: the ledger is a periodic
+    # Every Monday, 00:00 Philippine time (UTC+8) = Sunday 16:00 UTC. Not tied to pushes: the ledger is a periodic
     # sweep that diffs live file content against last-recorded hashes, so any
     # number of rule merges during the week are picked up correctly here.
-    - cron: "0 0 * * 1"
+    - cron: "0 16 * * 0"
   workflow_dispatch: {}
 
 permissions:
@@ -68,7 +68,7 @@ jobs:
           import datetime
 
           head = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
-          today = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d")
+          today = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).strftime("%Y-%m-%d")  # Philippine date, the day the run starts there
 
           files = sorted(
               f

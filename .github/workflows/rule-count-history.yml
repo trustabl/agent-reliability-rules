@@ -18,7 +18,7 @@ name: Rule count history
 
 on:
   schedule:
-    - cron: '0 6 * * 1'       # weekly, Mondays 06:00 UTC, an hour after the download snapshot
+    - cron: '0 16 * * 0'      # weekly, Monday 00:00 Philippine time (UTC+8) = Sunday 16:00 UTC, with the download snapshot
   workflow_dispatch:           # run on demand to add a point now
 
 permissions:
