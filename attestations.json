@@ -671,9 +671,9 @@
       "attested_commit": "bc5f0defe20e4598c4e5b677b90a8f8b0c70601e"
     },
     "agent_config/exec_capable_allow.yaml": {
-      "sha256": "f6b31b5d5074da55bfbc5b0b1c29f57c237122b70787e28d508abe964d9b8c10",
-      "attested_at": "2026-11-02",
-      "attested_commit": "89cb797cb22b02338c59baffc3a76568151541b2"
+      "sha256": "84bd576a942aa5188ea12cb7b4b820e1a93ca2efba846f0d05538f086fbd6e27",
+      "attested_at": "2026-11-09",
+      "attested_commit": "87547a4afeef604261305eccbf5e65f8e3fea31d"
     },
     "agent_config/fetch_permissions.yaml": {
       "sha256": "7ea908c34ef0500945903343051251da48192e41d8969613a75320665e748815",
@@ -729,6 +729,16 @@
       "sha256": "cdf034e8877240016894231017f7c3a7f2709ba041f970cf34e6ee52db1c302f",
       "attested_at": "2026-11-02",
       "attested_commit": "89cb797cb22b02338c59baffc3a76568151541b2"
+    },
+    "agent_config/allow_all_bash.yaml": {
+      "sha256": "4be59f16cc9ede50a4af17d176cb56566b81d57ebda1a9f881b06429e251edf1",
+      "attested_at": "2026-11-09",
+      "attested_commit": "87547a4afeef604261305eccbf5e65f8e3fea31d"
+    },
+    "agent_config/script_agent_bypass.yaml": {
+      "sha256": "3b4b5d333de81c1c824cf0dc1cb4c9720a56bb3e4f7cd7186e3c3264d5bdafa0",
+      "attested_at": "2026-11-09",
+      "attested_commit": "87547a4afeef604261305eccbf5e65f8e3fea31d"
     }
   }
 }
