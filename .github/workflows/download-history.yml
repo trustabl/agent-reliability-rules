@@ -153,19 +153,17 @@ jobs:
 
           # Shields endpoint for the README badge, derived from the newest point so
           # the badge and the series can never disagree.
-          # Cumulative bundle pulls - the real lifetime count, including pulls made
-          # before this tracker existed. The delta since the baseline is still
-          # recorded in the series as since_baseline; it is just not what the
-          # badge shows.
-          #
-          # Reads bundles, not total: statement.json is cache-expiry noise and
-          # moves by more than one per pull, so it would inflate the headline.
+          # Shows the total: bundle pulls plus statement.json fetches (including
+          # the replaced files' counts carried over by publish.yml), the lifetime
+          # count of every rules download. A scan with no cached bundle fetches both
+          # files, so the total counts that scan twice; the split stays in the
+          # series (bundles / statements) for anyone who needs it.
           latest = series[-1]
           os.makedirs(os.path.dirname(badge), exist_ok=True)
           with open(badge, "w") as f:
               json.dump({"schemaVersion": 1,
                          "label": "downloads",
-                         "message": str(latest["bundles"]),
+                         "message": str(latest["total"]),
                          "color": "brightgreen"}, f)
               f.write("\n")
 
@@ -198,8 +196,12 @@ jobs:
             run with no local cache. CI runners are ephemeral, so a repo scanning
             on every push contributes one per run. Read it as rule pulls, not users.
 
-            `statements` counts `statement.json`, the channel pointer, cached for
-            its 30-day window — so it undercounts scans by design.
+            `statements` counts `statement.json`, the channel pointer. Every
+            online scan fetches it, so read it as scans. Each publish replaces the
+            file and resets its counter; publish.yml carries the old count over
+            (`statements_replaced`), so this number never drops.
+
+            The README badge shows `total` (bundles + statements).
 
             `since_baseline` is what arrived after tracking started.
 
