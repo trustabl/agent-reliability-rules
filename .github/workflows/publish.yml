@@ -213,7 +213,21 @@ jobs:
         run: |
           tag="channel-$CHANNEL"
           if gh release view "$tag" -R "${{ github.repository }}" >/dev/null 2>&1; then
+            # Replacing statement.json resets its download counter to 0, so carry the
+            # old count into a running total kept as one line of the release notes
+            # (download-history.yml adds it back). Read just before the replace and
+            # record just after it, so a failed upload never double-counts.
+            line='Downloads of replaced statements:'
+            prev=$(gh api "repos/${{ github.repository }}/releases/tags/$tag" \
+              --jq '[.assets[] | select(.name == "statement.json") | .download_count] | add // 0')
+            notes=$(gh release view "$tag" -R "${{ github.repository }}" --json body -q .body)
+            carried=$(printf '%s\n' "$notes" | sed -n "s/^$line \([0-9][0-9]*\)\$/\1/p" | tail -n 1)
             gh release upload "$tag" "stmt/statement.json" --clobber -R "${{ github.repository }}"
+            total=$(( ${carried:-0} + prev ))
+            notes=$(printf '%s\n' "$notes" | grep -v "^$line" || true)
+            gh release edit "$tag" -R "${{ github.repository }}" --notes "$(printf '%s\n\n%s %s\n' "$notes" "$line" "$total")" \
+              || echo "::warning::could not record the $prev replaced statement downloads (running total would be $total)"
+            echo "carried $prev statement downloads from the replaced file; running total $total"
           else
             # First publish for this channel. If the create loses a race, fall back
             # to clobber-upload so the channel ends up pointed at this statement.
