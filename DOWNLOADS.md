@@ -75,7 +75,10 @@ for downloads that arrived after that snapshot ran.
 | File | Release | What triggers a download |
 |---|---|---|
 | `bundle.tar.gz` | one `bundle-<digest>` release per rules bundle, never replaced | a scan that does not have that bundle cached yet: a first run, a new rules release, or any run without a cache (common on CI runners) |
-| `statement.json` | `channel-production` and `channel-staging`, one file each, replaced on every publish | every online scan, unless rule updates are turned off (`Resolve` in the analyzer's `internal/rulesource/releasesource.go`) |
+| `statement.json` | `channel-production` ([file](https://github.com/trustabl/agent-reliability-rules/releases/download/channel-production/statement.json)) and `channel-staging` ([file](https://github.com/trustabl/agent-reliability-rules/releases/download/channel-staging/statement.json)), one file each, replaced on every publish | every online scan, unless rule updates are turned off (`Resolve` in the analyzer's `internal/rulesource/releasesource.go`) |
+
+Opening a file link downloads it, which adds one to its count. To read the counts, use the API
+commands in *Check it yourself* instead.
 
 These are file downloads, not users. A scan with no cached bundle downloads both files,
 so the total counts that scan twice; the `bundles` / `statements` split in
@@ -157,8 +160,8 @@ Adding the 1,286 to the 10 November 2026 snapshot (6,511) would give at least 7,
 | [bundle-80ca7c8f…](https://github.com/trustabl/agent-reliability-rules/releases/tag/bundle-80ca7c8f16bd59bb904d1ee45b4e3c1c6064660a12c9a14b003d841a26e114fa) | bundle.tar.gz | 2026-10-20 | 1,877 |
 | [bundle-b55cbae4…](https://github.com/trustabl/agent-reliability-rules/releases/tag/bundle-b55cbae4eb9f36ab3db73783061b9ad5d083e7b5ef80d0df9ef202432b874c7f) | bundle.tar.gz | 2026-11-09 | 90 |
 | **Bundles** | | | **4,491** |
-| [channel-production](https://github.com/trustabl/agent-reliability-rules/releases/tag/channel-production) | statement.json | 2026-11-09 07:00 | 97 |
-| [channel-staging](https://github.com/trustabl/agent-reliability-rules/releases/tag/channel-staging) | statement.json | 2026-11-09 06:57 | 2 |
+| [channel-production](https://github.com/trustabl/agent-reliability-rules/releases/tag/channel-production) | [statement.json](https://github.com/trustabl/agent-reliability-rules/releases/download/channel-production/statement.json) | 2026-11-09 07:00 | 97 |
+| [channel-staging](https://github.com/trustabl/agent-reliability-rules/releases/tag/channel-staging) | [statement.json](https://github.com/trustabl/agent-reliability-rules/releases/download/channel-staging/statement.json) | 2026-11-09 06:57 | 2 |
 | **GitHub total** | | | **4,590** |
 | `channel-production` notes | Downloads of replaced statements | | 1,929 |
 | **Total** | | | **6,519** |
