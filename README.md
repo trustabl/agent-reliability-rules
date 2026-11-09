@@ -4,7 +4,7 @@
 
 <p align="center">
   <a href="https://github.com/trustabl/agent-reliability-rules/releases"><img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Ftrustabl%2Fagent-reliability-rules%2Fmain%2Fbadges%2Frules.json" alt="Detection rule count"></a>
-  <a href="https://github.com/trustabl/agent-reliability-rules/releases"><img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Ftrustabl%2Fagent-reliability-rules%2Fmain%2Fbadges%2Fdownloads.json" alt="Rule bundle downloads"></a>
+  <a href=".github/stats/README.md"><img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Ftrustabl%2Fagent-reliability-rules%2Fmain%2Fbadges%2Fdownloads.json" alt="Rules downloads (total)"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache--2.0-blue" alt="Apache-2.0"></a>
 </p>
 
