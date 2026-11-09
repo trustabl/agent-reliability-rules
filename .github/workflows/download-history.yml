@@ -67,7 +67,7 @@ jobs:
           BADGE_FILE: badges/downloads.json
         run: |
           python - <<'PY'
-          import json, os, urllib.request, datetime
+          import json, os, re, urllib.request, datetime
 
           repo   = os.environ["TARGET_REPO"]
           path   = os.environ["HISTORY_FILE"]
@@ -84,13 +84,21 @@ jobs:
               with urllib.request.urlopen(req, timeout=30) as r:
                   return json.load(r)
 
-          bundles = statements = other = 0
+          bundles = statements = other = replaced = 0
           page = 1
           while True:
               rels = api("https://api.github.com/repos/%s/releases?per_page=100&page=%d" % (repo, page))
               if not rels:
                   break
               for rel in rels:
+                  # Each publish replaces channel-<name>/statement.json, which resets its
+                  # counter; publish.yml keeps the replaced files' downloads as a running
+                  # total in the channel release's notes. Add it back so the series
+                  # never drops on a publish.
+                  if rel.get("tag_name", "").startswith("channel-"):
+                      m = re.search(r"^Downloads of replaced statements: (\d+)\s*$", rel.get("body") or "", re.M)
+                      if m:
+                          replaced += int(m.group(1))
                   for a in rel.get("assets", []):
                       n, name = a.get("download_count", 0), a.get("name", "")
                       if name == "bundle.tar.gz":     bundles    += n
@@ -100,6 +108,7 @@ jobs:
                   break
               page += 1
 
+          statements += replaced  # lifetime: live counters plus replaced files
           total = bundles + statements + other
           # Philippine date (UTC+8): the run starts Monday 00:00 there, which is still Sunday in UTC.
           day   = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).date().isoformat()
@@ -112,7 +121,7 @@ jobs:
 
           hist = {p["date"]: p for p in data.get("history", [])}
           hist[day] = {"date": day, "bundles": bundles, "statements": statements,
-                       "other": other, "total": total}
+                       "statements_replaced": replaced, "other": other, "total": total}
           series = [hist[d] for d in sorted(hist)]
 
           # Releases can be pruned, which lowers the cumulative sum. Left alone the
