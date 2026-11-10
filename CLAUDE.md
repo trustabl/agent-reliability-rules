@@ -108,6 +108,7 @@ against. Pick values from the table for the scope you're targeting.
 | `langchain_agent`         | `create_*_agent(...)` from LangChain                          |
 | `langchain_agent_executor`| `AgentExecutor(...)` from LangChain                           |
 | `langchain_state_graph`   | `StateGraph(...)` from LangGraph                              |
+| `langchain_deep_agent`    | `create_deep_agent(...)` from `deepagents` (Python)           |
 | `crewai_agent`            | `Agent(...)` from `crewai`                                    |
 | `pydantic_ai_agent`       | `Agent(...)` from `pydantic-ai`                               |
 | `vercel_ai_agent`         | `generateText` / `streamText` / `Agent` from the `ai` package |
