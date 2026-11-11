@@ -107,7 +107,8 @@ mcp/                                  Model Context Protocol rules (MCP-NNN)
 └── tool_definition.yaml              MCP-001..003 (python), MCP-011 (typescript), MCP-015..022 (go, csharp, php, rust)
 claude_skill/                         Claude Code skill rules (CSKILL-NNN, all skill scope)
 ├── skill_quality_text.yaml           CSKILL-080..086
-└── skill_safety.yaml                 CSKILL-001..003, 010, 011, 020, 030, 040, 050, 060, 061, 070, 071
+├── skill_safety.yaml                 CSKILL-001..003, 010, 011, 020, 030, 040, 050, 060, 061, 070, 071
+└── slash_command_safety.yaml         CCMD-001..003 (slash_command scope)
 langchain/                            LangChain / LangGraph rules (LC-NNN)
 ├── agent_safety.yaml                 LC-101, LC-102 (agent); LC-111 (agent, typescript)
 ├── code_execution.yaml               LC-004 (python), LC-012 (typescript)
