@@ -102,8 +102,10 @@ mcp/                                  Model Context Protocol rules (MCP-NNN)
 ├── idempotency.yaml                  MCP-007
 ├── network.yaml                      MCP-004
 ├── path_safety.yaml                  MCP-005
+├── server_exposure.yaml              MCP-203 (repo scope, HTTP server bound to all interfaces)
 ├── shell_safety.yaml                 MCP-010, MCP-012
 ├── ssrf.yaml                         MCP-008, MCP-013
+├── tool_description_hidden_text.yaml MCP-036 (python), MCP-037 (typescript)
 └── tool_definition.yaml              MCP-001..003 (python), MCP-011 (typescript), MCP-015..022 (go, csharp, php, rust)
 claude_skill/                         Claude Code skill rules (CSKILL-NNN, all skill scope)
 ├── skill_quality_text.yaml           CSKILL-080..086
