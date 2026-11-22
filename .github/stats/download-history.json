@@ -160,14 +160,14 @@
     },
     {
       "date": "2026-11-23",
-      "bundles": 5220,
-      "statements": 2812,
+      "bundles": 5233,
+      "statements": 2825,
       "statements_replaced": 1929,
       "other": 0,
-      "total": 8032,
+      "total": 8058,
       "since_baseline": {
-        "bundles": 4679,
-        "total": 7472
+        "bundles": 4692,
+        "total": 7498
       }
     }
   ],
