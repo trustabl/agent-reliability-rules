@@ -7,6 +7,13 @@ scan time; the rule **schema** and **predicate** implementations, plus the
 per-rule test harness, live in that engine repository. Links below labeled
 "engine repo" point there.
 
+## Download counts
+
+Before reporting or comparing download numbers for this repository, read
+[`DOWNLOADS.md`](DOWNLOADS.md). The total is higher than the sum of the GitHub release
+counts by design (replaced `statement.json` files lose their count on GitHub; it is kept
+in the channel release notes and `.github/stats/download-history.json`).
+
 ## Engine/rules split — read this first
 
 - **Rules** (the `.yaml` packs) live **here**.
