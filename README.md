@@ -71,6 +71,7 @@ claude_sdk/                           Claude Agent SDK rules (CSDK-NNN)
 └── tool_definition.yaml              CSDK-001, CSDK-002, CSDK-007, CSDK-008, CSDK-017, CSDK-018 (python); CSDK-014 (typescript)
 openai_sdk/                           OpenAI Agents SDK rules (OAI-NNN)
 ├── agent_safety.yaml                 OAI-101..104, OAI-109, OAI-110, OAI-112 (agent); OAI-105 (agent, typescript)
+├── agent_tool_wiring.yaml            OAI-206 (handoff target with a shell tool)
 ├── approvals.yaml                    OAI-014, OAI-111 (needs_approval gates)
 ├── code_execution.yaml               OAI-013 (python), OAI-017 (typescript)
 ├── decorator_config.yaml             OAI-003, OAI-004, OAI-015
@@ -83,6 +84,7 @@ openai_sdk/                           OpenAI Agents SDK rules (OAI-NNN)
 ├── repo_hygiene.yaml                 OAI-202 (repo scope, CLAUDE.md missing)
 ├── shell_safety.yaml                 OAI-012
 ├── tool_definition.yaml              OAI-001, OAI-002, OAI-007 (python), OAI-022 (typescript)
+├── tool_safety_overrides.yaml        OAI-208 (model-settable override on a sink tool), OAI-209 (options order tool with no limit)
 └── tracing.yaml                      OAI-201 (repo scope)
 google_adk/                           Google ADK rules (ADK-NNN)
 ├── agent_safety.yaml                 ADK-101..108, ADK-110 (agent); ADK-109 (agent, typescript)
@@ -98,6 +100,7 @@ google_adk/                           Google ADK rules (ADK-NNN)
 └── tool_definition.yaml              ADK-001, ADK-002, ADK-007, ADK-009, ADK-018, ADK-019 (python), ADK-013 (typescript)
 mcp/                                  Model Context Protocol rules (MCP-NNN)
 ├── code_execution.yaml               MCP-009, MCP-014
+├── elicitation.yaml                  MCP-212 (python), MCP-214 (typescript)
 ├── error_handling.yaml               MCP-006
 ├── idempotency.yaml                  MCP-007
 ├── network.yaml                      MCP-004
@@ -105,11 +108,13 @@ mcp/                                  Model Context Protocol rules (MCP-NNN)
 ├── server_exposure.yaml              MCP-203 (repo scope, HTTP server bound to all interfaces)
 ├── shell_safety.yaml                 MCP-010, MCP-012
 ├── ssrf.yaml                         MCP-008, MCP-013
+├── tool_description_directives.yaml  MCP-211 (python), MCP-213 (typescript)
 ├── tool_description_hidden_text.yaml MCP-036 (python), MCP-037 (typescript)
 └── tool_definition.yaml              MCP-001..003 (python), MCP-011 (typescript), MCP-015..022 (go, csharp, php, rust)
 claude_skill/                         Claude Code skill rules (CSKILL-NNN, all skill scope)
 ├── skill_quality_text.yaml           CSKILL-080..086
 ├── skill_safety.yaml                 CSKILL-001..003, 010, 011, 020, 030, 040, 050, 060, 061, 070, 071
+├── skill_selection_and_decoding.yaml CSKILL-092, CSKILL-093
 └── slash_command_safety.yaml         CCMD-001..003 (slash_command scope)
 langchain/                            LangChain / LangGraph rules (LC-NNN)
 ├── agent_safety.yaml                 LC-101, LC-102 (agent); LC-111 (agent, typescript)
