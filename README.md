@@ -109,7 +109,8 @@ mcp/                                  Model Context Protocol rules (MCP-NNN)
 └── tool_definition.yaml              MCP-001..003 (python), MCP-011 (typescript), MCP-015..022 (go, csharp, php, rust)
 claude_skill/                         Claude Code skill rules (CSKILL-NNN, all skill scope)
 ├── skill_quality_text.yaml           CSKILL-080..086
-└── skill_safety.yaml                 CSKILL-001..003, 010, 011, 020, 030, 040, 050, 060, 061, 070, 071
+├── skill_safety.yaml                 CSKILL-001..003, 010, 011, 020, 030, 040, 050, 060, 061, 070, 071
+└── slash_command_safety.yaml         CCMD-001..003 (slash_command scope)
 langchain/                            LangChain / LangGraph rules (LC-NNN)
 ├── agent_safety.yaml                 LC-101, LC-102 (agent); LC-111 (agent, typescript)
 ├── code_execution.yaml               LC-004 (python), LC-012 (typescript)
@@ -162,12 +163,16 @@ agent_config/                         Pre-trust harness config rules (AGCFG-NNN,
 ├── mcp_client_config.yaml            MCPCFG-002, MCPCFG-003
 └── preauth_execution.yaml            AGCFG-004..007
 
+agent_server/                         Agent server exposure rules (AGSRV-NNN; repo scope, no SDK gate)
+├── any_origin.yaml                   AGSRV-001
+└── unauthenticated_publish.yaml      AGSRV-002
+
 ci/                                   Coding agents in GitHub Actions workflows (CI-NNN; repo scope, no SDK gate)
 ├── untrusted_triggers.yaml           CI-001, CI-002
 └── agent_hardening.yaml              CI-003..005
 ```
 
-The `agent_config` and `ci` families are cross-harness config rules, so they sit outside the
+The `agent_config`, `agent_server` and `ci` families are cross-harness config rules, so they sit outside the
 SDK-prefix numbering below (AGCFG-001..003 and MCPCFG-001 are unused; CI rules number by topic).
 
 ID prefix denotes SDK; `NNN` tool scope, `1NN` agent / subagent scope, `2NN`
