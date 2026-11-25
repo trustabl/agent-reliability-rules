@@ -4,7 +4,7 @@
 
 <p align="center">
   <a href="https://github.com/trustabl/agent-reliability-rules/releases"><img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Ftrustabl%2Fagent-reliability-rules%2Fmain%2Fbadges%2Frules.json" alt="Detection rule count"></a>
-  <a href="https://github.com/trustabl/agent-reliability-rules/releases"><img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Ftrustabl%2Fagent-reliability-rules%2Fmain%2Fbadges%2Fdownloads.json" alt="Rule bundle downloads"></a>
+  <a href="DOWNLOADS.md"><img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Ftrustabl%2Fagent-reliability-rules%2Fmain%2Fbadges%2Fdownloads.json" alt="Rules downloads (total)"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache--2.0-blue" alt="Apache-2.0"></a>
 </p>
 
@@ -160,12 +160,16 @@ agent_config/                         Pre-trust harness config rules (AGCFG-NNN,
 ├── mcp_client_config.yaml            MCPCFG-002, MCPCFG-003
 └── preauth_execution.yaml            AGCFG-004..007
 
+agent_server/                         Agent server exposure rules (AGSRV-NNN; repo scope, no SDK gate)
+├── any_origin.yaml                   AGSRV-001
+└── unauthenticated_publish.yaml      AGSRV-002
+
 ci/                                   Coding agents in GitHub Actions workflows (CI-NNN; repo scope, no SDK gate)
 ├── untrusted_triggers.yaml           CI-001, CI-002
 └── agent_hardening.yaml              CI-003..005
 ```
 
-The `agent_config` and `ci` families are cross-harness config rules, so they sit outside the
+The `agent_config`, `agent_server` and `ci` families are cross-harness config rules, so they sit outside the
 SDK-prefix numbering below (AGCFG-001..003 and MCPCFG-001 are unused; CI rules number by topic).
 
 ID prefix denotes SDK; `NNN` tool scope, `1NN` agent / subagent scope, `2NN`

@@ -7,6 +7,13 @@ scan time; the rule **schema** and **predicate** implementations, plus the
 per-rule test harness, live in that engine repository. Links below labeled
 "engine repo" point there.
 
+## Download counts
+
+Before reporting or comparing download numbers for this repository, read
+[`DOWNLOADS.md`](DOWNLOADS.md). The total is higher than the sum of the GitHub release
+counts by design (replaced `statement.json` files lose their count on GitHub; it is kept
+in the channel release notes and `.github/stats/download-history.json`).
+
 ## Engine/rules split — read this first
 
 - **Rules** (the `.yaml` packs) live **here**.
@@ -131,6 +138,7 @@ enum values used by the `repo_has_sdk_in_code` predicate:
 | `raw_llm_sdk`      | Bare `anthropic` / `openai` client usage (no agent framework); category `raw_llm_sdk` loads unconditionally, the rule's own predicate gates |
 | `github_actions`   | Coding agents in GitHub Actions workflows (repo-root `.github/workflows/*.yml`); category `ci` loads unconditionally, the rule's own `repo_ci_agent_*` predicate gates. One finding per step that runs an offending agent (CI-003: per checkout step), carrying that step's file and line |
 | `agent_config`     | Pre-trust harness config committed to the repo (`.claude/settings.json`, `.mcp.json`, `.gemini/.env`, `.vscode/settings.json`, `.codex/config.toml`); category `agent_config` loads unconditionally, the rule's own `repo_*` predicate gates. Findings carry the offending file and line |
+| `agent_server`     | Exposure of a server the repo runs for an agent (Spring `application*.properties` / `.yml` origin list, ADK Python and TypeScript origin options, compose and `docker run` lines for the OpenHands agent server image); category `agent_server` loads unconditionally, the rule's own `repo_*` predicate gates. Findings carry the offending file and line |
 
 Repo-scope rules typically combine `applies_to` with a `repo_has_sdk_in_code`
 predicate to narrow firing to repos that actually use the SDK in code (e.g.
