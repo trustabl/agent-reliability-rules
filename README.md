@@ -72,10 +72,12 @@ claude_sdk/                           Claude Agent SDK rules (CSDK-NNN)
 openai_sdk/                           OpenAI Agents SDK rules (OAI-NNN)
 ├── agent_safety.yaml                 OAI-101..104, OAI-109, OAI-110, OAI-112 (agent); OAI-105 (agent, typescript)
 ├── agent_tool_wiring.yaml            OAI-206 (handoff target with a shell tool)
+├── approval_token_tools.yaml         OAI-205 (agent holds authorized_by and an approval-requesting tool)
 ├── approvals.yaml                    OAI-014, OAI-111 (needs_approval gates)
 ├── code_execution.yaml               OAI-013 (python), OAI-017 (typescript)
 ├── decorator_config.yaml             OAI-003, OAI-004, OAI-015
 ├── error_handling.yaml               OAI-008
+├── handoff_input_filter.yaml         OAI-204 (handoff to a shell-tool agent with no input filter)
 ├── idempotency.yaml                  OAI-009 (python), OAI-019 (typescript)
 ├── mcp_safety.yaml                   OAI-106 (agent scope, MCP-gated)
 ├── network.yaml                      OAI-005, OAI-011, OAI-018 (python); OAI-016, OAI-024 (typescript)
@@ -88,6 +90,7 @@ openai_sdk/                           OpenAI Agents SDK rules (OAI-NNN)
 └── tracing.yaml                      OAI-201 (repo scope)
 google_adk/                           Google ADK rules (ADK-NNN)
 ├── agent_safety.yaml                 ADK-101..108, ADK-110 (agent); ADK-109 (agent, typescript)
+├── approval_token_tools.yaml         ADK-203 (agent holds authorized_by and an approval-requesting tool)
 ├── builtin_tools.yaml                ADK-008 (BashTool policy gate, agent scope)
 ├── code_execution.yaml               ADK-011 (python), ADK-015 (typescript)
 ├── error_handling.yaml               ADK-005
@@ -99,12 +102,16 @@ google_adk/                           Google ADK rules (ADK-NNN)
 ├── ssrf.yaml                         ADK-012 (python), ADK-016 (typescript)
 └── tool_definition.yaml              ADK-001, ADK-002, ADK-007, ADK-009, ADK-018, ADK-019 (python), ADK-013 (typescript)
 mcp/                                  Model Context Protocol rules (MCP-NNN)
+├── client_launch.yaml                MCP-205 (repo scope, stdio client command), MCP-207 (repo scope, server URL opened)
 ├── code_execution.yaml               MCP-009, MCP-014
 ├── elicitation.yaml                  MCP-212 (python), MCP-214 (typescript)
 ├── error_handling.yaml               MCP-006
 ├── idempotency.yaml                  MCP-007
 ├── network.yaml                      MCP-004
+├── package_install.yaml              MCP-210 (repo scope, npm or pnpm install from a value)
+├── path_prefix_containment.yaml      MCP-204 (repo scope, startsWith containment, typescript)
 ├── path_safety.yaml                  MCP-005
+├── server_auth_transport.yaml        MCP-206 (repo scope, bearer audience), MCP-208 (shared transport), MCP-209 (DNS rebinding off)
 ├── server_exposure.yaml              MCP-203 (repo scope, HTTP server bound to all interfaces)
 ├── shell_safety.yaml                 MCP-010, MCP-012
 ├── ssrf.yaml                         MCP-008, MCP-013
@@ -118,6 +125,7 @@ claude_skill/                         Claude Code skill rules (CSKILL-NNN, all s
 └── slash_command_safety.yaml         CCMD-001..003 (slash_command scope)
 langchain/                            LangChain / LangGraph rules (LC-NNN)
 ├── agent_safety.yaml                 LC-101, LC-102 (agent); LC-111 (agent, typescript)
+├── approval_token_tools.yaml         LC-203 (agent holds authorized_by and an approval-requesting tool)
 ├── code_execution.yaml               LC-004 (python), LC-012 (typescript)
 ├── repo_hygiene.yaml                 LC-201 (repo scope, AGENTS.md/CLAUDE.md missing)
 ├── shell_safety.yaml                 LC-003 (python), LC-011 (typescript)
@@ -126,6 +134,7 @@ langchain/                            LangChain / LangGraph rules (LC-NNN)
 └── tool_definition.yaml              LC-001, LC-002 (python); LC-010 (typescript)
 crewai/                               CrewAI rules (CREW-NNN, all python)
 ├── agent_safety.yaml                 CREW-101, CREW-102, CREW-104, CREW-110 (agent)
+├── approval_token_tools.yaml         CREW-203 (agent holds authorized_by and an approval-requesting tool)
 ├── code_execution.yaml               CREW-103 (agent), CREW-003 (tool)
 ├── dangerous_tools.yaml              CREW-106, CREW-107, CREW-109 (agent)
 ├── idempotency.yaml                  CREW-006
@@ -144,6 +153,7 @@ autogen/                              AutoGen / AG2 rules (AG2-NNN, all python)
 └── tool_definition.yaml              AG2-007, AG2-008
 pydantic_ai/                          Pydantic AI rules (PYD-NNN, all python)
 ├── agent_safety.yaml                 PYD-101..103, PYD-105, PYD-106 (agent)
+├── approval_token_tools.yaml         PYD-203 (agent holds authorized_by and an approval-requesting tool)
 ├── code_execution.yaml               PYD-004
 ├── idempotency.yaml                  PYD-007
 ├── network.yaml                      PYD-006
